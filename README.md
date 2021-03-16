@@ -1,5 +1,5 @@
 # Shuwa
-[Web app](https://bit-sign-language.web.app/)
+[Web app](http://bit-sign-language-test-ml.web.app/)
 
 # Run webcam demo KNN
 ```
