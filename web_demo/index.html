@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>shuwa open-source</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.3.0/dist/tf.min.js"></script>
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body>
+    <!-- 
+        FLOW: 
+        check loading model
+        select the tutorial sign
+        recording the camera
+        send recorded to model
+        receive result
+        * wanna help to improve model ?
+            ask result true or false
+            false >> modal selection the true sign
+            >> upload selected frame with selected tag to cloud
+            true >> upload to cloud 
+        :
+            null
+        clear data
+        go to record
+     -->
+    <div class="processing-modal">
+      <!-- 
+            use this processing modal as
+            - preparing model
+            - model processing
+            - send data to cloud
+         -->
+      <p class="processing-text">Preparing Model</p>
+      <div class="processing-loader">this is loader</div>
+    </div>
+    <div class="selection-modal">
+      <!-- case of wanna improve model && got wrong result -->
+    </div>
+    <div class="main-page">
+      <div class="demo-section">
+        this is video seleciton section
+        <div class="demo-section-video-wrapper">
+          <video
+            src="./assets/video/hksl/Hksl_bicycle.mp4"
+            class="demo-video"
+            autoplay
+            loop
+            muted
+            playsinline
+          ></video>
+        </div>
+        <div class="demo-section-sign-wrapper">
+          <div class="demo-section-sign-wrapper-language-btn-wrapper">
+            <!-- hksl button and jsl button -->
+            <button class="language-btn">HKSL</button>
+            <button class="language-btn">JSL</button>
+          </div>
+          <div class="demo-section-sign-wrapper-sign-table-wrapper">
+            <!-- hksl list && jsl list || class sign-selection-table -->
+          </div>
+        </div>
+      </div>
+      <div class="record-section">
+        this is record section
+        <!--
+            state
+            - idle
+            - processing
+            - result
+            -->
+        <div class="record-idle">
+          <div class="record-camera-wrapper">
+            <div class="video-wrapper">
+              <img src="./assets/guide_human.png" alt="" class="human-guide" />
+              <video
+                class="video-camera"
+                autoplay
+                playsinline
+                id="video-camera-id"
+              ></video>
+            </div>
+            <canvas class="canvas-capture" width="257" height="257"></canvas>
+          </div>
+          <div class="record-btn-wrapper">
+            <button class="record-btn">
+              <p class="record-countdown-text">RECORD</p>
+            </button>
+          </div>
+        </div>
+        <div class="record-result">
+          this is record result
+          <div class="frame-analyst-wrapper">
+            <div class="frame-analyst-table"></div>
+            <div class="frame-analyst-canvas-wrapper">
+              <canvas class="frame-canvas"></canvas>
+              <p class="frame-canvas-text"></p>
+            </div>
+          </div>
+          <div class="result-prediction-wrapper">
+            <div class="result-prediction-table"></div>
+            <div class="toggle-improve-wrapper"></div>
+          </div>
+          <div class="rolling-btn-wrapper">
+            <div class="not-improve-wrapper">
+              <p class="title-btn">Try another sign</p>
+              <div class="action-btn-wrapper">
+                <button class="primary-btn" id="try-again-btn">
+                  try again
+                </button>
+              </div>
+            </div>
+            <div class="improve-wrapper">
+              <p class="title-btn">Is this correct</p>
+              <div class="action-btn-wrapper">
+                <button class="default-btn" id="improve-btn-no">No</button>
+                <button class="primary-btn" id="improve-btn-yes">Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- js main -->
+    <script type="module" src="js/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+}
+.processing-modal {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: beige;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  display: none;
+}
+.processing-text {
+}
+.processing-loader {
+}
+
+.main-page {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+.demo-section {
+  background-color: brown;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.demo-seciton-video-wrapper {
+  background-color: red;
+  width: 100%;
+}
+.demo-video {
+  width: 20vw;
+  height: 20vw;
+}
+.demo-section-sign-wrapper {
+  background-color: royalblue;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.demo-section-sign-wrapper-language-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.demo-section-sign-wrapper-sign-table-wrapper {
+  width: 80%;
+  margin-left: 1rem;
+  background-color: salmon;
+}
+.record-section {
+  background-color: yellow;
+  width: 50%;
+  position: relative;
+}
+.record-idle {
+  width: 90%;
+  height: 90%;
+  background-color: slateblue;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.record-result {
+  width: 90%;
+  height: 90%;
+  background-color: salmon;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  /* dev */
+  display: none;
+}
