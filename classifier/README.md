@@ -1,6 +1,7 @@
 
-## Train FC Classifier
-1. Prepare your dataset.
+## Train Classifier
+1. Prepare your dataset.  
+A video of person performing sing language. You can get the dataset from this [Gdrive]()
 
 ```
 my_dataset_folder
@@ -20,14 +21,11 @@ my_dataset_folder
 .
 .
 ```
-2. Detect and save keypoints data for each video.
+2. Prepare keypoints data for training.
 
 ```
-python create_dataset.py my_dataset_folder my_annotations_folder
+python ../create_dataset.py my_dataset_folder output_folder
 ```
+
 3. Train  
-use this [notebook](classifier/train_fc_classifier.ipynb)
-
-
-## Train KNN Classifier 
-use this [notebook](classifier/train_knn_classifier.ipynb)
+See [notebook](classifier/train_knn_classifier.ipynb)
