@@ -10,10 +10,8 @@ from gui import DemoGUI
 from pipeline import Pipeline
 
 
-
-cap = cv2.VideoCapture(0)
-
 KNN_DATASET_PATH = "knn_dataset"
+cap = cv2.VideoCapture(0)
 
 class Application(DemoGUI, Pipeline):
 
@@ -48,7 +46,9 @@ class Application(DemoGUI, Pipeline):
         
         else:    
             self.database = np.stack(self.database)
-            self.labels = np.array(self.labels)            
+            self.labels = np.array(self.labels)       
+            print("[INFO] Found ", len(all_folder), "classes.")    
+            self.result_class_name = ""    
             return True
 
         
@@ -64,19 +64,14 @@ class Application(DemoGUI, Pipeline):
 
           
     def change_mode_on_tab(self, event):         
+        super().change_mode_on_tab(event)
         # check database before change from record mode to play mode.
         if not self.is_play_mode:
-            can_change_mode = self.load_database()
-        
-        if can_change_mode:
-            print("[INFO] Entering play mode.")        
-            self.result_class_name = ""
-            super().change_mode_on_tab(event)
-            
-            
+            self.load_database()        
+                        
+                            
     def toggle_record_button(self):
-        super().toggle_record_button()
-        
+        super().toggle_record_button()    
         if not self.is_recording:
             if len(self.pose_history) > NUM_FRAME_SAMPLES:
                 # playmode
@@ -96,15 +91,13 @@ class Application(DemoGUI, Pipeline):
             else:
                 print("[ERROR] Video too short.")
                 
-        self.reset_pipeline()                
+        self.reset_pipeline()
         
         
                 
  
-    def save_database(self):
-        """
-        Save recorded templates to files.
-        """       
+    def save_database(self):      
+        # Save recorded templates to files.           
         super().save_database()        
         timestamp =  datetime.now().strftime("%d%m%Y%H%M%S")
         # Read texbox entry, use as folder name.
