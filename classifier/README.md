@@ -34,7 +34,7 @@ my_dataset_folder
 ```
 python ../create_dataset.py my_dataset_folder output_folder
 ```
-3. Edit LABELS variable in [constants.py](../constants#L43)
+3. Edit LABELS variable in [constants.py](../constants.py#L43)
 
 
 3. Train  
