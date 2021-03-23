@@ -1,7 +1,7 @@
 body {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: relative;
   margin: 0;
 }
@@ -96,4 +96,11 @@ body {
   z-index: 2;
   /* dev */
   display: none;
+}
+
+.jsl-sign-button.active {
+  background-color: green;
+}
+.hksl-sign-button.active {
+  background-color: green;
 }
