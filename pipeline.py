@@ -3,8 +3,7 @@ import sys
 import numpy as np
 from constants import *
 from utils import local2global_keypoints, crop_from_rect, get_face_rect_from_posenet
-from scipy.spatial.distance import cdist
-from scipy.stats import mode
+
 
 sys.path.insert(1, 'posenet')
 sys.path.insert(1, 'face_landmark')
@@ -84,30 +83,25 @@ class Pipeline:
         return feats, cls
     
     
-    def run_knn_classifier(self):    
-        feats, cls = self.run_classifier()            
-   
+    def run_knn_classifier(self, k=3):    
+        feats, _ = self.run_classifier()        
+        distances_by_feats = np.square(self.database - feats)        
+        distances_total = np.sum(distances_by_feats, axis=-1)    
         
-        distances = np.sum(np.square(self.database - feats), axis=-1)        
-    
-        # top 3 nearst samples.
-        k = 3
-        indices = np.argpartition(distances, k)[:k]        
-        top3class_name = self.labels[indices]
-        result_class_name = mode(top3class_name)[0][0]      
-       
-        template_feats = self.database[indices[0]]
-        template_pose, template_face, template_hands = template_feats[:256], template_feats[256:320], template_feats[320:]               
-        feats_pose, feats_face, feats_hands = feats[:256], feats[256:320], feats[320:]
+
+        # top 7 nearst samples.      
+        top_indices = np.argpartition(distances_total, k)[:k]
+        top_lables = self.labels[top_indices]
         
-        pose_disttance = np.sum(np.square(template_pose-feats_pose), axis=-1)
-        face_distance = np.sum(np.square(template_face-feats_face), axis=-1)
-        hands_distance = np.sum(np.square(template_hands-feats_hands), axis=-1)
-                
-        total_dist = pose_disttance+face_distance+hands_distance
+        
+        # mode.       
+        vals, counts = np.unique(top_lables, return_counts=True)
+        index = np.argmax(counts)
+        result_class_name = vals[index]
+        
 
-        return result_class_name, total_dist, pose_disttance, face_distance, hands_distance
 
+        return result_class_name
         
 
         
