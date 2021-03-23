@@ -38,7 +38,7 @@ python ../create_dataset.py my_dataset_folder output_folder
 
 
 3. Train  
-See [notebook](classifier/train_knn_classifier.ipynb)  
+See [notebook](train_knn_classifier.ipynb)  
   
   
 4. Convert checkpoint to TFJS model.  
