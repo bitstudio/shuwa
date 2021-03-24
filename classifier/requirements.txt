@@ -1,3 +1,2 @@
 tensorflow-addons
 jupyter
-tqdm
