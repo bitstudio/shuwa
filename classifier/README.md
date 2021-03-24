@@ -44,5 +44,6 @@ See [`notebook`](train_knn.ipynb)
 4. Convert checkpoint to TFJS model.  
 Use the TFJSConverter command and locate your trained .h5 checkpoint.  
 ```
+pip install tensorflowjs
 tfjs_wizard
 ```
