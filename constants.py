@@ -33,12 +33,12 @@ HAND_CENTER_INDEX = 9
 # ─── CLASSIFIER ─────────────────────────────────────────────────────────────────
 SPLIT_TRAIN_VAL = 0.2
 NUM_START_FILTERS = 64
-
 NUM_FRAME_SAMPLES = 16
-
-
-# default value for missing keypoint coordinates.
 IGNORE_VALUE = 0.
+
+
+
+
 
 LABELS = {
     "0_Idle":0,

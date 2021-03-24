@@ -26,25 +26,7 @@ class KNNDataGenerator(Sequence):
         for k in self.all_labels.keys():
             print(k, len(self.all_labels[k]))
             
-            
-        self.sign_hard_count = np.ones(len(LABELS), dtype=np.int32)
-        self.hard_idxs = [0,1,2,3,4,5,6,7,8,9]
-        
 
-    def update_hard_count(self, hard_sign_idxs):        
-        self.sign_hard_count[hard_sign_idxs.astype(np.int32)] += 1
-        
-        
-    def update_hard_idxs(self):
-        # update hard indicies for next epoch.
-        self.hard_idxs = np.argsort(self.sign_hard_count)[-10:]
-        self.sign_hard_count = np.ones(len(LABELS), dtype=np.int32)
-       
-       
-      
-                
-  
-  
     def __iter__(self):
         return self
 
@@ -82,23 +64,14 @@ class KNNDataGenerator(Sequence):
     
     def random_train_sample(self):
         """
-        random pick one sample from the datset.
-        """
-        
-        prob = np.random.random()
-        if prob < 0.85:
-            random_class_name = random.choice(list(self.all_labels.keys()))
-            label_idx = LABELS[random_class_name]
-        else:
-            label_idx = random.choice(self.hard_idxs)
-            random_class_name = LABELS_NAME[label_idx]
-        
-
-          
+        random pick sample from the datset.
+        """      
+        random_class_name = random.choice(list(self.all_labels.keys()))
+        label_idx = LABELS[random_class_name]
+       
         pose_frames, face_frames, left_hand_frames, right_hand_frames = random.choice(self.all_labels[random_class_name])            
         assert len(pose_frames) > 12
         
-
         # sampling frames.
         sampling_method = random.choice([uniform_sampling, random_sampling])
         pose_frames, face_frames, left_hand_frames, right_hand_frames = sampling_method(pose_frames, face_frames, left_hand_frames, right_hand_frames)
@@ -130,16 +103,13 @@ class KNNDataGenerator(Sequence):
        
     def __getitem__(self, item):
 
-        # anchor.
         pose_frames_batch = np.empty([self.batch_size, NUM_FRAME_SAMPLES, NUM_SELECTED_POSENET_JOINTS, POSENET_JOINT_DIMS], dtype=np.float32)
         face_frames_batch = np.empty([self.batch_size, NUM_FRAME_SAMPLES, NUM_SELECTED_FACE_JOINTS, FACE_JOINT_DIMS], dtype=np.float32)
         left_hand_frames_batch = np.empty([self.batch_size, NUM_FRAME_SAMPLES, NUM_HAND_JOINTS, HAND_JOINT_DIMS], dtype=np.float32)
         right_hand_frames_batch = np.empty([self.batch_size, NUM_FRAME_SAMPLES, NUM_HAND_JOINTS, HAND_JOINT_DIMS], dtype=np.float32)
         
- 
-
         y_batch = np.zeros([self.batch_size, 1], dtype=np.float32)
-        cls_batch = np.zeros([self.batch_size, NUM_CLASSES], dtype=np.float32)
+      
 
         for i in range(self.batch_size):
         
@@ -148,16 +118,12 @@ class KNNDataGenerator(Sequence):
             pose_frames_batch[i] = pose_frames
             face_frames_batch[i] = face_frames
             left_hand_frames_batch[i] = left_hand_frames
-            right_hand_frames_batch[i] = right_hand_frames      
-            
-            
+            right_hand_frames_batch[i] = right_hand_frames     
+                        
             
             y_batch[i] = label_idx
-            cls_batch[i,label_idx] = 1.
-            
-  
-            
+         
 
-        return [pose_frames_batch, face_frames_batch, left_hand_frames_batch, right_hand_frames_batch], [y_batch, cls_batch]
+        return [pose_frames_batch, face_frames_batch, left_hand_frames_batch, right_hand_frames_batch], y_batch
 
 

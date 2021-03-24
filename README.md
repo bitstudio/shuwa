@@ -34,17 +34,17 @@ You can also press 'R' to start/stop recording.
 
 # Run Detector demo
 You can try each detector individually by using these scripts.
-- FaceMesh demo
+- FaceMesh
 ```
 python face_landmark\webcam_demo_face.py
 ```
 
-- PoseNet demo
+- PoseNet
 ```
 python posenet\webcam_demo_pose.py
 ```
 
-- HandLandmarks demo
+- HandLandmarks
 ```
 python hand_landmark\webcam_demo_hand.py
 ```

@@ -29,12 +29,12 @@ my_dataset_folder
 .
 .
 ```
-2. Prepare keypoints data for training.
+2. Preprocess data for training.
 
 ```
 python ../create_dataset.py my_dataset_folder output_folder
 ```
-3. Edit LABELS variable in [`constants.py`](../constants.py#L43)
+3. Edit LABELS in [`constants.py`](../constants.py#L43)
 
 
 3. Train  
