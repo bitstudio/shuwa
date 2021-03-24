@@ -1,11 +1,13 @@
 # Shuwa
- Shuwa ML is a Deep Learning model pipeline that classify sign language from input video, Implemented in tensorflow2.  
- You can try our web demo here — [demo](/web_demo)
+## [[Blog post]()] [[Web demo]()]
+
+Shuwa ML is a Deep Learning model pipeline that classify sign language from input video, Implemented in tensorflow2.  
 
 
 # How it works
 ![](assets/overview.jpg)  
 By combining pose, face, and hand detector results over multiple frames we can acquire a fairly requirement for sign language understanding includes body movement, facial movement, and hand gesture. After that we use DD-Net as a recognitor to predict sign features represented in the 832D vector. Finally using use K-Nearest Neighbor classification to output the class prediction.  
+See more details in the [blog post]()
 
 All related models listed below.
 
@@ -47,6 +49,10 @@ python posenet\webcam_demo_pose.py
 python hand_landmark\webcam_demo_hand.py
 ```
 
+# Deploy in webapp
+Instruction can be found [`here`](/web_demo)
+
+
 # Train classifier from scratch
 Usually you can add a custom sign by using Record mode in the full demo program.  
-But in case you want to train the classifier from scratch you can check out the process —[here](/classifier)
+But in case you want to train the classifier from scratch you can check out the process [`here`](/classifier)
