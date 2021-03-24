@@ -4,6 +4,7 @@
 
 
 # How it works
+![](assets/overview.jpg)  
 By combining pose, face, and hand detector results over multiple frames we can acquire a fairly requirement for sign language understanding includes body movement, facial movement, and hand gesture. After that we use DD-Net as a recognitor to predict sign features represented in the 832D vector. Finally using use K-Nearest Neighbor classification to output the class prediction.  
 
 All related models listed below.
