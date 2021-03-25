@@ -11,6 +11,14 @@ window.recoil = {
 };
 
 $(document).ready(() => {
+  const mainpage_changestate = (input) => {
+    switch (input) {
+      case "idle":
+        console.log("idle");
+      case "loadingmodel":
+        console.log("loading model");
+    }
+  };
   console.log("getting start ready!");
   initVideoSeleciton();
   setupCamera();
