@@ -1,4 +1,4 @@
-import { partNames } from "./constant";
+import { partNames } from "./const.js";
 
 const NUM_KEYPOINTS = partNames.length;
 

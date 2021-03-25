@@ -56,8 +56,10 @@
         <div class="demo-section-sign-wrapper">
           <div class="demo-section-sign-wrapper-language-btn-wrapper">
             <!-- hksl button and jsl button -->
-            <button class="language-btn">HKSL</button>
-            <button class="language-btn">JSL</button>
+            <button class="language-btn active" id="language-hksl-btn">
+              HKSL
+            </button>
+            <button class="language-btn" id="language-jsl-btn">JSL</button>
           </div>
           <div class="demo-section-sign-wrapper-sign-table-wrapper">
             <!-- hksl list && jsl list || class sign-selection-table -->
@@ -83,10 +85,15 @@
                 id="video-camera-id"
               ></video>
             </div>
-            <canvas class="canvas-capture" width="257" height="257"></canvas>
+            <canvas
+              class="canvas-capture"
+              width="257"
+              height="257"
+              id="canvas-capture-id"
+            ></canvas>
           </div>
           <div class="record-btn-wrapper">
-            <button class="record-btn">
+            <button class="record-btn" id="record-btn-id">
               <p class="record-countdown-text">RECORD</p>
             </button>
           </div>
@@ -96,12 +103,26 @@
           <div class="frame-analyst-wrapper">
             <div class="frame-analyst-table"></div>
             <div class="frame-analyst-canvas-wrapper">
-              <canvas class="frame-canvas"></canvas>
+              <div
+                class="frame-canvas-wrapper"
+                id="frame-canvas-wrapper-id"
+              ></div>
               <p class="frame-canvas-text"></p>
             </div>
           </div>
           <div class="result-prediction-wrapper">
-            <div class="result-prediction-table"></div>
+            <div class="result-prediction-table">
+              <table style="border-collapse: collapse; width: 100%">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Sign result</th>
+                    <th>Accuracy (%)</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+              </table>
+            </div>
             <div class="toggle-improve-wrapper"></div>
           </div>
           <div class="rolling-btn-wrapper">

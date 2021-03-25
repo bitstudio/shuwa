@@ -68,7 +68,54 @@ body {
   width: 80%;
   margin-left: 1rem;
   background-color: salmon;
+  height: 50vh;
+  overflow-y: scroll;
 }
+.language-btn {
+  background-color: whitesmoke;
+}
+.language-btn.active {
+  background-color: red;
+}
+.jsl-sign-button {
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.jsl-sign-button:hover {
+  background-color: #000;
+  color: #fff;
+}
+.jsl-sign-button:active {
+  background-color: #000;
+  color: #fff;
+}
+.jsl-sign-button:focus {
+  outline: 0;
+}
+.hksl-sign-button {
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.hksl-sign-button:hover {
+  background-color: #000;
+  color: #fff;
+}
+.hksl-sign-button:active {
+  background-color: #000;
+  color: #fff;
+}
+.hksl-sign-button:focus {
+  outline: 0;
+}
+
 .record-section {
   background-color: yellow;
   width: 50%;

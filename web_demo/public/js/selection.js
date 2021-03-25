@@ -54,6 +54,7 @@ export const initVideoSeleciton = async () => {
   // add jsl selection list
   const jsl_table = document.createElement("div");
   jsl_table.classList.add("jsl-sign-table");
+  jsl_table.style.display = "none";
   $(".demo-section-sign-wrapper-sign-table-wrapper").append(jsl_table);
 
   for (const jsl_sign of label_list.JSL_LABELS) {

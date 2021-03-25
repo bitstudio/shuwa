@@ -1,7 +1,7 @@
 "use-strict";
 
 let cameraState = "idle";
-export const initRecord = () => {
+export const setupCamera = () => {
   /**
    * init camera
    * init record button
@@ -47,4 +47,36 @@ export const initRecord = () => {
     } else return;
   };
   setupCamera();
+};
+
+export const captureImage = () => {
+  cameraState = "capturing";
+  const canvasElem = document.getElementById("canvas-capture-id");
+  const videoElem = document.getElementById("video-camera-id");
+
+  const canvasCtx = canvasElem.getContext("2d");
+
+  canvasCtx.clearRect(0, 0, canvasElem.width, canvasElem.height);
+
+  canvasCtx?.drawImage(
+    videoElem,
+    (videoElem.videoWidth - videoElem.videoHeight) / 2,
+    0,
+    videoElem?.videoHeight,
+    videoElem?.videoHeight,
+    0,
+    0,
+    canvasElem?.width,
+    canvasElem?.height
+  );
+
+  return {
+    imageData: canvasCtx?.getImageData(
+      0,
+      0,
+      canvasElem.width,
+      canvasElem.height
+    ),
+    dataUrl: canvasElem?.toDataURL("image/png"),
+  };
 };

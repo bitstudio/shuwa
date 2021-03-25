@@ -3,8 +3,12 @@ import {
   local2GlobalKeypoints,
   getRadians,
   getDistance,
-} from "./utility";
-import { SELECTED_POSENET_JOINTS, SELECTED_FACE_POINTS, LABELS } from "./const";
+} from "./utility.js";
+import {
+  SELECTED_POSENET_JOINTS,
+  SELECTED_FACE_POINTS,
+  LABELS,
+} from "./const.js";
 
 export default class SignLanguageClassifyModel {
   constructor() {
