@@ -23,8 +23,8 @@ const options = {
 https
   .createServer(options, app)
 
-  .listen(3001, function () {
+  .listen(3000, function () {
     console.log(
-      "Example app listening on port 3001! Go to https://localhost:3001/"
+      "Example app listening on port 3000! Go to https://localhost:3000/"
     );
   });

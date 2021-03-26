@@ -27,6 +27,38 @@
         clear data
         go to record
      -->
+    <!-- correction modal -->
+    <div class="background" />
+    <div class="correction-modal-wrapper">
+      <p class="correction-title">Which is the correct sign</p>
+      <div class="correction-modal-video-wrapper">
+        <video
+          id="correction-modal-video"
+          class="correction-modal-video"
+          autoplay
+          loop
+          muted
+          playsinline
+        ></video>
+      </div>
+      <div class="correction-modal-sign-wrapper">
+        <div class="correction-modal-sign-wrapper-language-btn-wrapper">
+          <!-- hksl button and jsl button -->
+          <button
+            class="language-btn active"
+            id="correction-modal-language-hksl-btn"
+          >
+            HKSL
+          </button>
+          <button class="language-btn" id="correction-modal-language-jsl-btn">
+            JSL
+          </button>
+        </div>
+        <div class="correction-modal-sign-wrapper-sign-table-wrapper">
+          <!-- hksl list && jsl list || class sign-selection-table -->
+        </div>
+      </div>
+    </div>
     <div class="processing-modal">
       <!-- 
             use this processing modal as
@@ -34,7 +66,7 @@
             - model processing
             - send data to cloud
          -->
-      <p class="processing-text">Preparing Model</p>
+      <p class="processing-text"></p>
       <div class="processing-loader">this is loader</div>
     </div>
     <div class="selection-modal">
@@ -101,13 +133,36 @@
         <div class="record-result">
           this is record result
           <div class="frame-analyst-wrapper">
-            <div class="frame-analyst-table"></div>
+            <div class="frame-analyst-table">
+              <table style="border-collapse: collapse; width: 100%">
+                <thead>
+                  <tr>
+                    <th>Frame</th>
+                    <th>Pose</th>
+                    <th>Face</th>
+                    <th>Left Hand</th>
+                    <th>Right Hand</th>
+                  </tr>
+                </thead>
+                <tbody id="frame-table-body-id"></tbody>
+              </table>
+            </div>
             <div class="frame-analyst-canvas-wrapper">
               <div
                 class="frame-canvas-wrapper"
                 id="frame-canvas-wrapper-id"
               ></div>
-              <p class="frame-canvas-text"></p>
+              <p class="frame-canvas-text" id="frame-canvas-text-id">
+                frame: 1
+              </p>
+              <input
+                type="range"
+                min="0"
+                max="15"
+                step="1"
+                value="0"
+                id="frame-canvas-slider"
+              />
             </div>
           </div>
           <div class="result-prediction-wrapper">
@@ -123,7 +178,10 @@
                 <tbody id="table-body"></tbody>
               </table>
             </div>
-            <div class="toggle-improve-wrapper"></div>
+            <div class="toggle-improve-wrapper">
+              <input type="checkbox" id="toggle-improve-check-id" />
+              <h5>I would like to help improve ML performance</h5>
+            </div>
           </div>
           <div class="rolling-btn-wrapper">
             <div class="not-improve-wrapper">
