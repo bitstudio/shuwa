@@ -445,6 +445,7 @@ $(document).ready(() => {
   };
   $("#try-again-btn").on("click", () => {
     clearStack();
+    window.recoil.recordClickable = true;
     page_changeState("idle");
   });
 
@@ -452,6 +453,7 @@ $(document).ready(() => {
     const finishUpload = () => {
       console.log("finish upload");
       clearStack();
+      window.recoil.recordClickable = true;
       page_changeState("idle");
     };
     page_changeState("upload");
@@ -487,6 +489,7 @@ $(document).ready(() => {
     const finishUpload = () => {
       console.log("finish upload");
       clearStack();
+      window.recoil.recordClickable = true;
       page_changeState("idle");
     };
     page_changeState("upload");
