@@ -66,7 +66,7 @@ class Application(DemoGUI, Pipeline):
     def change_mode_on_tab(self, event):         
         super().change_mode_on_tab(event)
         # check database before change from record mode to play mode.
-        if not self.is_play_mode:
+        if self.is_play_mode:
             self.load_database()        
                         
                             
@@ -85,7 +85,7 @@ class Application(DemoGUI, Pipeline):
                 # record mode.
                 else:
                     # add video track.                
-                    self.records.append(self.run_classifier()[0])
+                    self.records.append(self.run_classifier())
                     self.num_records_text.set("num records: "+ str(len(self.records)))
                     
             else:
@@ -107,10 +107,8 @@ class Application(DemoGUI, Pipeline):
                     
             if not os.path.exists(folder_path):
                 os.mkdir(folder_path)
-            
-            for i, a in enumerate(self.records):     
-                
-                np.savetxt(folder_path+os.sep+timestamp+str(i)+".txt", a)
+            for i, a in enumerate(self.records):                
+                np.savetxt(folder_path+os.sep+timestamp+str(i)+".txt", a, fmt='%.8f')
             print("[INFO] database saved.")
             # clear.
             self.records = []

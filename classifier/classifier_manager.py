@@ -45,7 +45,7 @@ class ClassifierManager():
     
     def __call__(self, kp_stack):        
         net_input = self.preprocess_input(kp_stack)
-        output_feats, output_cls = self.model(net_input)
+        output_feats= self.model(net_input)
         
-        return output_feats.numpy().reshape(-1), output_cls.numpy().reshape(-1)
+        return output_feats.numpy().reshape(-1)
   

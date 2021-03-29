@@ -76,15 +76,14 @@ class Pipeline:
 
         Returns:
             np.ndarray: 832 feats.
-            np.ndarray: cls score of 100 classes.
         """
-        feats, cls = self.classifier([self.pose_history, self.face_history, self.left_hand_history, self.right_hand_history])
+        feats = self.classifier([self.pose_history, self.face_history, self.left_hand_history, self.right_hand_history])
         self.reset_pipeline()
-        return feats, cls
+        return feats
     
     
     def run_knn_classifier(self, k=3):    
-        feats, _ = self.run_classifier()        
+        feats = self.run_classifier()        
         distances_by_feats = np.square(self.database - feats)        
         distances_total = np.sum(distances_by_feats, axis=-1)    
         
@@ -97,9 +96,7 @@ class Pipeline:
         # mode.       
         vals, counts = np.unique(top_lables, return_counts=True)
         index = np.argmax(counts)
-        result_class_name = vals[index]
-        
-
+        result_class_name = vals[index]       
 
         return result_class_name
         
