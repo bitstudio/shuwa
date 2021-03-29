@@ -102,6 +102,12 @@ body {
 .language-btn.active {
   background-color: red;
 }
+.correction-language-btn {
+  background-color: whitesmoke;
+}
+.correction-language-btn.active {
+  background-color: red;
+}
 .jsl-sign-button {
   width: 100%;
   border: none;
@@ -237,5 +243,11 @@ body {
   background-color: green;
 }
 .hksl-sign-button.active {
+  background-color: green;
+}
+.jsl-correction-sign-button.active {
+  background-color: green;
+}
+.hksl-correction-sign-button.active {
   background-color: green;
 }

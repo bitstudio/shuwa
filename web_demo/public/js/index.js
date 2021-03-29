@@ -337,6 +337,40 @@ $(document).ready(() => {
     });
     e.target.classList.add("active");
   });
+  $("#correction-modal-language-hksl-btn").on("click", (e) => {
+    const correction_jsl_table = document.querySelector(
+      ".jsl-correction-sign-table"
+    );
+    const correction_hksl_table = document.querySelector(
+      ".hksl-correction-sign-table"
+    );
+    correction_jsl_table.style.display = "none";
+    correction_hksl_table.style.display = "unset";
+
+    document
+      .getElementsByClassName("correction-language-btn")
+      .forEach((item) => {
+        item.classList.remove("active");
+      });
+    e.target.classList.add("active");
+  });
+  $("#correction-modal-language-jsl-btn").on("click", (e) => {
+    const correction_jsl_table = document.querySelector(
+      ".jsl-correction-sign-table"
+    );
+    const correction_hksl_table = document.querySelector(
+      ".hksl-correction-sign-table"
+    );
+    correction_jsl_table.style.display = "unset";
+    correction_hksl_table.style.display = "none";
+
+    document
+      .getElementsByClassName("correction-language-btn")
+      .forEach((item) => {
+        item.classList.remove("active");
+      });
+    e.target.classList.add("active");
+  });
 
   /**
    * toggle check to improve

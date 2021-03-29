@@ -102,10 +102,10 @@ export const initVideoSeleciton = async () => {
   hksl_table.classList.add("hksl-sign-table");
   $(".demo-section-sign-wrapper-sign-table-wrapper").append(hksl_table);
 
-  const hksl_table_table = document.createElement("div");
-  hksl_table_table.classList.add("hksl-correction-sign-table");
+  const hksl_correction_table = document.createElement("div");
+  hksl_correction_table.classList.add("hksl-correction-sign-table");
   $(".correction-modal-sign-wrapper-sign-table-wrapper").append(
-    hksl_table_table
+    hksl_correction_table
   );
 
   for (const hksl_sign of label_list.HKSL_LABELS) {
