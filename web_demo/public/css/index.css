@@ -1,7 +1,7 @@
 body {
   width: 100vw;
   height: 100vh;
-  /* overflow: hidden; */
+  overflow: hidden;
   position: relative;
 
   margin: 0;
@@ -29,7 +29,16 @@ body {
 }
 .processing-loader {
 }
-
+.background {
+  width: 100vw;
+  height: 100vh;
+  background-color: unset;
+  transition: all 0.5s;
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 .correction-modal-wrapper {
   display: flex;
   flex-direction: column;
@@ -42,10 +51,16 @@ body {
   left: 50%;
   background-color: white;
   z-index: 100;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 150%);
   border: 1px solid black;
   border-radius: 2rem;
-  transition: all 0.5s;
+
+  -khtml-transition: transform 0.5s ease;
+  -moz-transition: transform 0.5s ease;
+  -ms-transition: transform 0.5s ease;
+  -o-transition: transform 0.5s ease;
+  -webkit-transition: transform 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
 .main-page {
@@ -167,7 +182,7 @@ body {
 }
 .record-camera-wrapper {
   position: absolute;
-  width: 90%;
+  width: 100%;
   height: 50%;
   top: 20%;
   left: 50%;
@@ -190,6 +205,15 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+}
+#countdown-text {
+  position: absolute;
+  font-size: 2rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: white;
 }
 .video-camera {
   position: absolute;

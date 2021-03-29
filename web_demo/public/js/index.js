@@ -5,13 +5,24 @@ import { setupCamera, captureImage } from "./record.js";
 
 import SignLanguageClassifyModel from "./ML/signClassify.js";
 import { drawResult } from "./drawkeypoints.js";
+import { sendDataToCloud } from "./sendData.js";
 
 window.recoil = {
   selectSign: "",
+  recordClickable: true,
 };
 
 // TODO: select no and appear correction modal
 // push lang to correction modal
+
+/**
+ * project states:
+ *  loading model >> idle >> record >> processing model >> result >> result no >> update to cloud
+ * loading model
+ *  - processing-modal
+ * idle
+ *  -
+ */
 
 $(document).ready(() => {
   const page_changeState = (input) => {
@@ -19,6 +30,9 @@ $(document).ready(() => {
     const processingText = document.querySelector(".processing-text");
     const recordIdle = document.querySelector(".record-idle");
     const recordResult = document.querySelector(".record-result");
+    const correctionModal = document.querySelector(".correction-modal-wrapper");
+    const backgrounddiv = document.querySelector(".background");
+    const correctionVideo = document.querySelector("#correction-modal-video");
     switch (input) {
       case "idle":
         recordIdle.style.opacity = "1";
@@ -41,11 +55,25 @@ $(document).ready(() => {
         console.log("processing model");
         break;
       case "upload":
+        correctionModal.style.transform = "translate(-50%, 150%)";
+        backgrounddiv.style.backgroundColor = "unset";
+        backgrounddiv.style.zIndex = -1;
+        setTimeout(() => {
+          correctionVideo.src = "";
+        }, 600);
+
         processingModal.style.display = "flex";
         processingText.innerHTML = "upload data to cloud";
-        console.log("processing model");
+        console.log("uploading data model");
         break;
       case "result":
+        correctionModal.style.transform = "translate(-50%, 150%)";
+        backgrounddiv.style.backgroundColor = "unset";
+        backgrounddiv.style.zIndex = -1;
+        setTimeout(() => {
+          correctionVideo.src = "";
+        }, 600);
+
         recordIdle.style.opacity = "0";
         recordIdle.style.zIndex = "1";
 
@@ -54,6 +82,10 @@ $(document).ready(() => {
         processingModal.style.display = "none";
         console.log("result");
         break;
+      case "result_no":
+        correctionModal.style.transform = "translate(-50%, -50%)";
+        backgrounddiv.style.backgroundColor = "rgb(80,80,80,0.7)";
+        backgrounddiv.style.zIndex = 50;
       default:
         break;
     }
@@ -192,7 +224,7 @@ $(document).ready(() => {
       const canvasWrapperEl = document.getElementById(
         "frame-canvas-wrapper-id"
       );
-
+      removeChild("#frame-canvas-wrapper-id");
       for (const i in PREDICTION_IMAGE_STACK) {
         const canvasEl = drawResult({
           imageData: PREDICTION_IMAGE_STACK[i].imageData,
@@ -304,15 +336,21 @@ $(document).ready(() => {
 
   $("#record-btn-id").on("click", () => {
     // count down 3 sec
-    let count = 0;
-    const CountDownInterval = setInterval(() => {
-      count += 1;
-      console.log(count);
-      if (count === 3) {
-        clearInterval(CountDownInterval);
-        handleCapture();
-      }
-    }, 1000);
+    if (window.recoil.recordClickable) {
+      window.recoil.recordClickable = false;
+      const countdownElem = document.getElementById("countdown-text");
+      let count = 0;
+      const CountDownInterval = setInterval(() => {
+        count += 1;
+        countdownElem.innerHTML = 4 - count;
+        console.log(count);
+        if (count === 3) {
+          countdownElem.innerHTML = "";
+          clearInterval(CountDownInterval);
+          handleCapture();
+        }
+      }, 1000);
+    }
   });
 
   $("#language-hksl-btn").on("click", (e) => {
@@ -395,102 +433,41 @@ $(document).ready(() => {
   });
 
   // click tryagain
+  const clearStack = () => {
+    IMAGE_STACK.length = 0;
+    PREDICTION_IMAGE_STACK.length = 0;
+    FRAME_KEYPOINTS_TABLE.length = 0;
+    RESULT_POSE_STACK.length = 0;
+    RESULT_FACE_STACK.length = 0;
+    RESULT_LEFTHAND_STACK.length = 0;
+    RESULT_RIGHTHAND_STACK.length = 0;
+    topFiveResultArr.length = 0;
+  };
   $("#try-again-btn").on("click", () => {
+    clearStack();
     page_changeState("idle");
   });
 
-  function dataURLtoFile(dataurl, filename) {
-    const arr = dataurl.split(","),
-      mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], filename, { type: mime });
-  }
-
-  async function uploadImage(url, dataurl, imageName) {
-    return new Promise((resolve, reject) => {
-      // var fd = new FormData()
-      // fd.append()
-      const xhr = new XMLHttpRequest();
-      xhr.open("PUT", url, true);
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            resolve(xhr.response);
-            console.log("upload complete");
-            // $('.bottom-page3-container').show();
-          } else {
-            reject(xhr.response);
-          }
-        }
-      };
-
-      const imageFile = dataURLtoFile(dataurl, imageName);
-
-      xhr.setRequestHeader("Content-Type", "image/png");
-      xhr.send(imageFile);
-    });
-  }
-
-  async function getSignedURL(metadata) {
-    return new Promise(async (resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open(
-        "POST",
-        "https://us-central1-bit-ml-research.cloudfunctions.net/sign_language_pipeline/get_signed_url",
-        true
-      );
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            resolve(JSON.parse(xhr.response).url);
-            console.log("get URL complete");
-          } else {
-            reject(xhr.response);
-          }
-        }
-      };
-
-      console.log(metadata);
-
-      xhr.setRequestHeader("Content-Type", "application/json");
-      const obj = JSON.stringify(metadata);
-      xhr.send(obj);
-    });
-  }
-
-  const sendDataToCloud = () => {
-    console.log(signingResult);
-    let frameCount = 1;
-    const folderTime = +Date.now();
-    const startSendData = async () => {
-      for (const imageSelected of PREDICTION_IMAGE_STACK) {
-        const imageURL = imageSelected.dataUrl;
-        const metadata = {
-          directory: "ML_demo_test/" + signingResult + "/" + folderTime,
-          filename: String(frameCount) + ".png",
-          contentType: "image/png",
-          action: "write",
-          version: "v4",
-        };
-        frameCount += 1;
-        const url = await getSignedURL(metadata);
-        uploadImage(url, imageURL, signingResult);
-      }
-      // tryagain
+  $("#correction-submit-btn").on("click", (e) => {
+    const finishUpload = () => {
+      console.log("finish upload");
+      clearStack();
+      page_changeState("idle");
     };
-    startSendData();
-  };
-
+    page_changeState("upload");
+    sendDataToCloud(
+      PREDICTION_IMAGE_STACK,
+      window.recoil.selectSign,
+      finishUpload
+    );
+  });
+  $("#correction-cancel-btn").on("click", (e) => {
+    page_changeState("result");
+  });
   // click no
   $("#improve-btn-no").on("click", () => {
     /**
+     * TODO:
      * open modal
      * change page state to open modal
      * select the right answer
@@ -498,15 +475,21 @@ $(document).ready(() => {
      * send data to database
      * change page state to cloud
      */
-
-    sendDataToCloud();
+    page_changeState("result_no");
   });
 
   $("#improve-btn-yes").on("click", () => {
     /**
+     * TODO:
      * send data to cloud
      * change page state to cloud
      */
-    sendDataToCloud();
+    const finishUpload = () => {
+      console.log("finish upload");
+      clearStack();
+      page_changeState("idle");
+    };
+    page_changeState("upload");
+    sendDataToCloud(PREDICTION_IMAGE_STACK, signingResult, finishUpload);
   });
 });

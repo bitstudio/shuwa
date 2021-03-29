@@ -110,7 +110,7 @@ export const LABELS = [
   "Hksl_summer",
   "Hksl_sunglasses",
   "Hksl_supermarket",
-  "HKsl_tiger",
+  "Hksl_tiger",
   "Hksl_tomato",
   "Hksl_trouble",
   "Hksl_understand",

@@ -39,6 +39,7 @@ export const initVideoSeleciton = async () => {
     console.log("picker: ", picker);
     picker.classList.add("active");
 
+    window.recoil.selectSign = input;
     const signLanguage = input.split("_")[0];
     const videoSrc = "./assets/video/" + signLanguage + "/" + input + ".mp4";
 

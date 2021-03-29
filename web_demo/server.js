@@ -20,11 +20,13 @@ const options = {
 //   res.end("hello world\n");
 // }).listen(8000);
 
+const port = 8000;
+
 https
   .createServer(options, app)
 
-  .listen(3000, function () {
+  .listen(port, function () {
     console.log(
-      "Example app listening on port 3000! Go to https://localhost:3000/"
+      `Example app listening on port ${port}! Go to https://localhost:${port}/`
     );
   });

@@ -28,7 +28,7 @@
         go to record
      -->
     <!-- correction modal -->
-    <div class="background" />
+    <div class="background"></div>
     <div class="correction-modal-wrapper">
       <p class="correction-title">Which is the correct sign</p>
       <div class="correction-modal-video-wrapper">
@@ -60,6 +60,10 @@
         <div class="correction-modal-sign-wrapper-sign-table-wrapper">
           <!-- hksl list && jsl list || class sign-selection-table -->
         </div>
+      </div>
+      <div class="action-button-wrapper">
+        <button id="correction-cancel-btn">cancel</button>
+        <button id="correction-submit-btn">submit</button>
       </div>
     </div>
     <div class="processing-modal">
@@ -113,6 +117,7 @@
           <div class="record-camera-wrapper">
             <div class="video-wrapper">
               <img src="./assets/guide_human.png" alt="" class="human-guide" />
+              <p id="countdown-text"></p>
               <video
                 class="video-camera"
                 autoplay
