@@ -18,12 +18,13 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: beige;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  align-items: center;
   display: flex;
   z-index: 100;
+  background-color: white;
 }
 .processing-text {
 }
@@ -49,7 +50,6 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  background-color: white;
   z-index: 100;
   transform: translate(-50%, 150%);
   border: 1px solid black;
@@ -65,6 +65,7 @@ body {
 
 .main-page {
   width: 100vw;
+  max-width: 1280px;
   height: 100vh;
   position: absolute;
   top: 50%;
@@ -77,23 +78,27 @@ body {
 }
 
 .demo-section {
-  background-color: brown;
   width: 40%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  align-items: center;
 }
-.demo-seciton-video-wrapper {
-  background-color: red;
-  width: 100%;
+.demo-section-video-wrapper {
+  position: relative;
+  width: 60%;
+  height: 40%;
+  margin-bottom: 3%;
 }
 .demo-video {
-  width: 20vw;
-  height: 20vw;
+  height: 100%;
+  width: 80%;
+  border-radius: 2rem;
+  background-color: black;
+  border: 0.2rem solid black;
 }
 .demo-section-sign-wrapper {
-  background-color: royalblue;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -107,7 +112,6 @@ body {
 .demo-section-sign-wrapper-sign-table-wrapper {
   width: 80%;
   margin-left: 1rem;
-  background-color: salmon;
   height: 50vh;
   overflow-y: scroll;
 }
@@ -163,14 +167,12 @@ body {
 }
 
 .record-section {
-  background-color: yellow;
   width: 60%;
   position: relative;
 }
 .record-idle {
   width: 90%;
   height: 90%;
-  background-color: slateblue;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -183,15 +185,15 @@ body {
 .record-camera-wrapper {
   position: absolute;
   width: 100%;
-  height: 50%;
-  top: 20%;
+  height: 60%;
+  top: 10%;
   left: 50%;
   transform: translate(-50%, 0%);
-  background-color: beige;
 }
 .video-wrapper {
   position: absolute;
   width: 100%;
+  max-width: 720px;
   height: 100%;
   top: 50%;
   left: 50%;
@@ -199,16 +201,16 @@ body {
 }
 .human-guide {
   position: absolute;
-  width: 100%;
+  width: auto;
   height: 100%;
-  top: 50%;
+  bottom: 0%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
   z-index: 2;
 }
 #countdown-text {
   position: absolute;
-  font-size: 2rem;
+  font-size: 4rem;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -217,11 +219,13 @@ body {
 }
 .video-camera {
   position: absolute;
-  width: 100%;
+  height: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: black;
+  border-radius: 2rem;
+  border: 0.4rem solid black;
 }
 .canvas-capture {
   display: none;
@@ -229,15 +233,53 @@ body {
 .record-btn-wrapper {
   position: absolute;
   width: 100%;
-  bottom: 10%;
+  bottom: 8%;
   left: 50%;
   transform: translate(-50%, 0);
+
+  display: flex;
+  justify-content: center;
+}
+.record-btn-border {
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  border: 0.3rem solid red;
+
+  position: relative;
+}
+.record-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: none;
+  background-color: red;
+  cursor: pointer;
+  color: #fff;
+
+  transition: all 0.2s;
+}
+.record-btn:hover {
+  background-color: #fff;
+  color: #000;
+}
+.record-btn:active {
+  background-color: #fff;
+  color: #fff;
+}
+.record-btn:focus {
+  outline: 0;
 }
 
 .record-result {
   width: 90%;
   height: 90%;
-  background-color: salmon;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -274,4 +316,41 @@ body {
 }
 .hksl-correction-sign-button.active {
   background-color: green;
+}
+
+.rolling-btn-wrapper {
+  width: 100%;
+  height: 15vh;
+  position: relative;
+  overflow: hidden;
+}
+.not-improve-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  transition: transform 0.5s;
+}
+.improve-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  transition: transform 0.5s;
 }

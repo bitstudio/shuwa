@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.3.0/dist/tf.min.js"></script>
     <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/loader.css" />
   </head>
   <body>
     <!-- 
@@ -74,14 +75,13 @@
             - send data to cloud
          -->
       <p class="processing-text"></p>
-      <div class="processing-loader">this is loader</div>
+      <div class="processing-loader"><div class="loader-animation"></div></div>
     </div>
     <div class="selection-modal">
       <!-- case of wanna improve model && got wrong result -->
     </div>
     <div class="main-page">
       <div class="demo-section">
-        this is video seleciton section
         <div class="demo-section-video-wrapper">
           <video
             id="demo-video"
@@ -106,7 +106,6 @@
         </div>
       </div>
       <div class="record-section">
-        this is record section
         <!--
             state
             - idle
@@ -133,13 +132,14 @@
             ></canvas>
           </div>
           <div class="record-btn-wrapper">
-            <button class="record-btn" id="record-btn-id">
-              <p class="record-countdown-text">RECORD</p>
-            </button>
+            <div class="record-btn-border">
+              <button class="record-btn" id="record-btn-id">
+                <p class="record-countdown-text"></p>
+              </button>
+            </div>
           </div>
         </div>
         <div class="record-result">
-          this is record result
           <div class="frame-analyst-wrapper">
             <div class="frame-analyst-table">
               <table style="border-collapse: collapse; width: 100%">

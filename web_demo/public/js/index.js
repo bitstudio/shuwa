@@ -90,6 +90,21 @@ $(document).ready(() => {
         break;
     }
   };
+  const record_changeState = (input) => {
+    const recordBtn = document.getElementById("record-btn-id");
+    switch (input) {
+      case "idle":
+        recordBtn.style.width = "3rem";
+        recordBtn.style.height = "3rem";
+        recordBtn.style.borderRadius = "50%";
+        break;
+      case "record":
+        recordBtn.style.width = "1.6rem";
+        recordBtn.style.height = "1.6rem";
+        recordBtn.style.borderRadius = "0%";
+        break;
+    }
+  };
   console.log("getting start ready!");
   initVideoSeleciton();
   setupCamera();
@@ -324,6 +339,7 @@ $(document).ready(() => {
       const time_now = +new Date();
       if (time_now - time_startCapture > 3000) {
         console.log("finish capture image");
+        record_changeState("idle");
         page_changeState("processingmodel");
         startClassify();
         return;
@@ -340,12 +356,14 @@ $(document).ready(() => {
       window.recoil.recordClickable = false;
       const countdownElem = document.getElementById("countdown-text");
       let count = 0;
+      countdownElem.innerHTML = 3;
       const CountDownInterval = setInterval(() => {
+        countdownElem.innerHTML = 2 - count;
         count += 1;
-        countdownElem.innerHTML = 4 - count;
         console.log(count);
         if (count === 3) {
           countdownElem.innerHTML = "";
+          record_changeState("record");
           clearInterval(CountDownInterval);
           handleCapture();
         }
@@ -422,13 +440,19 @@ $(document).ready(() => {
    */
 
   let toggle_check = false;
+  const improveWrapper = document.querySelector(".improve-wrapper");
+  const notImproveWrapper = document.querySelector(".not-improve-wrapper");
   $("#toggle-improve-check-id").on("click", (e) => {
     if (e.target.checked === true) {
       console.log("check!");
       toggle_check = true;
+      improveWrapper.style.transform = "translate(-50%, 0%)";
+      notImproveWrapper.style.transform = "translate(-50%, -100%)";
     } else {
       console.log("uncheck");
       toggle_check = false;
+      improveWrapper.style.transform = "translate(-50%, 100%)";
+      notImproveWrapper.style.transform = "translate(-50%, 0%)";
     }
   });
 
