@@ -23,7 +23,7 @@ Install python 3.7 from [`official python.org`](https://www.python.org/downloads
 
 - Install dependencies
     ```
-    pip3 install -r requirement.txt
+    pip3 --user install -r requirement.txt
     ```
 
 
