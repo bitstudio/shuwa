@@ -21,8 +21,7 @@ class Application(DemoGUI, Pipeline):
         self.result_class_name = ""        
         self.database = []
         self.labels = []
-        self.records = []
-        self.load_database()
+        self.records = []      
         self.video_loop()
 
 

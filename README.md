@@ -18,15 +18,18 @@ All related models listed below.
 
 
 # Installation
-- In python 3
-```
-pip install -r requirement.txt
-```
+- For MacOS user  
+Install python 3.7 from [`official python.org`](https://www.python.org/downloads/release/python-379/) for tkinter support.
+
+- Install dependencies
+    ```
+    pip3 install -r requirement.txt
+    ```
 
 
 # Run Python webcam demo
 ```
-python webcam_demo_knn.py
+python3 webcam_demo_knn.py
 ```
 You can also press 'R' to start/stop recording.
 
@@ -42,17 +45,17 @@ You can also press 'R' to start/stop recording.
 You can try each detector individually by using these scripts.
 - FaceMesh
 ```
-python face_landmark\webcam_demo_face.py
+python3 face_landmark\webcam_demo_face.py
 ```
 
 - PoseNet
 ```
-python posenet\webcam_demo_pose.py
+python3 posenet\webcam_demo_pose.py
 ```
 
 - HandLandmarks
 ```
-python hand_landmark\webcam_demo_hand.py
+python3 hand_landmark\webcam_demo_hand.py
 ```
 
 # Deploy in webapp
