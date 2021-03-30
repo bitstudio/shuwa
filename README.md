@@ -17,6 +17,12 @@ All related models listed below.
 - >[DD-Net](https://github.com/fandulu/DD-Net) : Skeleton-based action recognition model.
 
 
+# Installation
+- In python 3
+```
+pip install -r requirement.txt
+```
+
 
 # Run Python webcam demo
 ```
