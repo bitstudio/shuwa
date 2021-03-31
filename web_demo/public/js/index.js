@@ -239,7 +239,7 @@ $(document).ready(() => {
       const canvasWrapperEl = document.getElementById(
         "frame-canvas-wrapper-id"
       );
-      removeChild("#frame-canvas-wrapper-id");
+      // await removeChild("#frame-canvas-wrapper-id");
       for (const i in PREDICTION_IMAGE_STACK) {
         const canvasEl = drawResult({
           imageData: PREDICTION_IMAGE_STACK[i].imageData,
@@ -253,7 +253,7 @@ $(document).ready(() => {
         if (canvasEl !== null && canvasWrapperEl !== null) {
           canvasEl.classList.add("result-kp-image");
           canvasEl.id = `image-frame-${i}`;
-          canvasEl.style.display = i == 0 ? "flex" : "none";
+          canvasEl.style.display = i == showResultCanvas ? "flex" : "none";
           canvasWrapperEl.appendChild(canvasEl);
         }
       }
@@ -262,7 +262,7 @@ $(document).ready(() => {
       signingResult = classifyResult.resultLabel;
 
       // update keypoint to table analyst
-      await removeChild("#frame-table-body-id");
+      // await removeChild("#frame-table-body-id");
       const frameParentTable = document.getElementById("frame-table-body-id");
       await Promise.all(
         FRAME_KEYPOINTS_TABLE.map((item, index) => {
@@ -302,7 +302,7 @@ $(document).ready(() => {
       // update to result state
       // update top 5 result
       // remove exits table
-      await removeChild("#table-body");
+      // await removeChild("#table-body");
       const parentTable = document.getElementById("table-body");
       console.log("check remove child");
       for (let i = 0; i < 5; i++) {
@@ -458,6 +458,9 @@ $(document).ready(() => {
 
   // click tryagain
   const clearStack = () => {
+    removeChild("#frame-table-body-id");
+    removeChild("#table-body");
+    removeChild("#frame-canvas-wrapper-id");
     IMAGE_STACK.length = 0;
     PREDICTION_IMAGE_STACK.length = 0;
     FRAME_KEYPOINTS_TABLE.length = 0;

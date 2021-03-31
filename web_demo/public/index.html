@@ -31,17 +31,7 @@
     <!-- correction modal -->
     <div class="background"></div>
     <div class="correction-modal-wrapper">
-      <p class="correction-title">Which is the correct sign</p>
-      <div class="correction-modal-video-wrapper">
-        <video
-          id="correction-modal-video"
-          class="correction-modal-video"
-          autoplay
-          loop
-          muted
-          playsinline
-        ></video>
-      </div>
+      <h3 class="correction-title">Which is the correct sign</h3>
       <div class="correction-modal-sign-wrapper">
         <div class="correction-modal-sign-wrapper-language-btn-wrapper">
           <!-- hksl button and jsl button -->
@@ -61,10 +51,20 @@
         <div class="correction-modal-sign-wrapper-sign-table-wrapper">
           <!-- hksl list && jsl list || class sign-selection-table -->
         </div>
+        <div class="correction-modal-video-wrapper">
+          <video
+            id="correction-modal-video"
+            class="correction-modal-video"
+            autoplay
+            loop
+            muted
+            playsinline
+          ></video>
+        </div>
       </div>
       <div class="action-button-wrapper">
-        <button id="correction-cancel-btn">cancel</button>
-        <button id="correction-submit-btn">submit</button>
+        <button id="correction-cancel-btn" class="default-btn">cancel</button>
+        <button id="correction-submit-btn" class="primary-btn">submit</button>
       </div>
     </div>
     <div class="processing-modal">
@@ -188,7 +188,7 @@
             </div>
             <div class="toggle-improve-wrapper">
               <input type="checkbox" id="toggle-improve-check-id" />
-              <h5>I would like to help improve ML performance</h5>
+              <h4>I would like to help improve ML performance</h4>
             </div>
           </div>
           <div class="rolling-btn-wrapper">
