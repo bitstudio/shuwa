@@ -1,25 +1,18 @@
 import numpy as np
-import scipy.ndimage as ndi
 from constants import *
 
 
 def build_part_with_coords(score_threshold, local_max_radius, scores, offsets, num_keypoints=11, output_stride=16):
         
-    # TODO just simple find the max index.
-    parts = np.array([0,0,np.array([]), np.array([])])
 
+    parts = np.array([0,0,np.array([]), np.array([])])
     for keypoint_id in range(0, num_keypoints):
         kp_scores = scores[:, :, keypoint_id].copy()
-        kp_scores[kp_scores < score_threshold] = 0.
-        
-        lmd = 50 if keypoint_id in FACE_INDICES else 2 * local_max_radius + 1
-        max_vals = ndi.maximum_filter(kp_scores, size=lmd, mode='constant')
-        max_loc = np.logical_and(kp_scores == max_vals, kp_scores > 0)
-        max_loc_idx = max_loc.nonzero()
-        for y, x in zip(*max_loc_idx):            
-            heatmap_coords = np.array([y, x])
-            image_coords = heatmap_coords * output_stride + offsets[y, x, keypoint_id]   
-            parts = np.vstack([parts, [scores[y, x, keypoint_id], keypoint_id, heatmap_coords, image_coords.astype(np.float32)]])
+        kp_scores[kp_scores < score_threshold] = 0.           
+        y, x = np.unravel_index(kp_scores.argmax(), kp_scores.shape)
+        heatmap_coords = np.array([y, x])
+        image_coords = heatmap_coords * output_stride + offsets[y, x, keypoint_id]   
+        parts = np.vstack([parts, [scores[y, x, keypoint_id], keypoint_id, heatmap_coords, image_coords.astype(np.float32)]])
                          
 
     return parts[1:]
@@ -67,9 +60,7 @@ def decode_single_pose(
                     
 
         if len(candidates) == 1:                         
-            final_score, _, final_heatmap_coords, final_image_coords = candidates[0]           
-  
-
+            final_score, _, final_heatmap_coords, final_image_coords = candidates[0] 
             pose_keypoint_scores[0, current_idx] = final_score
             pose_keypoint_heatmap_coords[0, current_idx, :] = final_heatmap_coords     
             pose_keypoint_coords[0, current_idx, :] = final_image_coords

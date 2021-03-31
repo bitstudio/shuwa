@@ -33,12 +33,12 @@ HAND_CENTER_INDEX = 9
 # ─── CLASSIFIER ─────────────────────────────────────────────────────────────────
 SPLIT_TRAIN_VAL = 0.2
 NUM_START_FILTERS = 64
-
 NUM_FRAME_SAMPLES = 16
-NUM_CLASSES = 100
-
-# default value for missing keypoint coordinates.
 IGNORE_VALUE = 0.
+
+
+
+
 
 LABELS = {
     "0_Idle":0,
@@ -142,6 +142,7 @@ LABELS = {
     "Jsl_wine":98,
     "Jsl_yellow":99
 }
+NUM_CLASSES = len(LABELS.keys())
 LABELS_NAME = list(LABELS.keys())
 # ─── POSENET DECODER ────────────────────────────────────────────────────────────
 
