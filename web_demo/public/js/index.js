@@ -237,7 +237,7 @@ $(document).ready(() => {
             selectFrameResult(index);
           });
           const frameNode = document.createElement("td");
-          frameNode.innerHTML = item.frame;
+          frameNode.innerHTML = Number(item.frame) + 1;
           const isPoseNode = document.createElement("td");
           isPoseNode.innerHTML = item.pose ? "yes" : "no";
           isPoseNode.style.backgroundColor = item.pose ? "#7ecbbd" : "#de5246";
@@ -279,7 +279,7 @@ $(document).ready(() => {
         const thisTable = document.createElement("tr");
         thisTable.setAttribute("key", i);
         const rankNode = document.createElement("td");
-        rankNode.innerHTML = i;
+        rankNode.innerHTML = i + 1;
         const resultNode = document.createElement("td");
         resultNode.innerHTML = sortedArray[i][0];
         const accNode = document.createElement("td");
@@ -417,6 +417,19 @@ $(document).ready(() => {
       toggle_check = false;
       improveWrapper.style.transform = "translate(-50%, 100%)";
       notImproveWrapper.style.transform = "translate(-50%, 0%)";
+    }
+  });
+  $("#toggle-improve-text").on("click", () => {
+    const togglebox = document.getElementById("toggle-improve-check-id");
+    togglebox.checked = !togglebox.checked;
+    if (toggle_check) {
+      toggle_check = false;
+      improveWrapper.style.transform = "translate(-50%, 100%)";
+      notImproveWrapper.style.transform = "translate(-50%, 0%)";
+    } else {
+      toggle_check = true;
+      improveWrapper.style.transform = "translate(-50%, 0%)";
+      notImproveWrapper.style.transform = "translate(-50%, -100%)";
     }
   });
 

@@ -38,7 +38,7 @@
   display: flex;
   overflow: hidden;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 
   position: absolute;
@@ -53,7 +53,7 @@
   display: flex;
   overflow: hidden;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 
   position: absolute;
@@ -69,4 +69,10 @@
   align-items: center;
 
   margin-top: 2rem;
+}
+#toggle-improve-check-id {
+  cursor: pointer;
+}
+#toggle-improve-text {
+  cursor: pointer;
 }
