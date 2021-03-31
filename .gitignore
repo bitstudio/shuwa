@@ -128,7 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 vid_output/
-video/
+
 classifier/checkpoints/
 classifier/checkpoints_dist/
 
