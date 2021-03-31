@@ -1,0 +1,110 @@
+.record-section {
+  width: 60%;
+  position: relative;
+}
+.record-idle {
+  width: 90%;
+  height: 90%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+
+  /* dev
+    display: none; */
+}
+.record-camera-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 60%;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+.video-wrapper {
+  position: absolute;
+  width: 100%;
+  max-width: 720px;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.human-guide {
+  position: absolute;
+  width: auto;
+  height: 100%;
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  z-index: 2;
+}
+#countdown-text {
+  position: absolute;
+  font-size: 4rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: white;
+}
+.video-camera {
+  position: absolute;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  border-radius: 2rem;
+  border: 0.4rem solid black;
+}
+.canvas-capture {
+  display: none;
+}
+.record-btn-wrapper {
+  position: absolute;
+  width: 100%;
+  bottom: 8%;
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  display: flex;
+  justify-content: center;
+}
+.record-btn-border {
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  border: 0.3rem solid red;
+
+  position: relative;
+}
+.record-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: none;
+  background-color: red;
+  cursor: pointer;
+  color: #fff;
+
+  transition: all 0.2s;
+}
+.record-btn:hover {
+  background-color: #fff;
+  color: #000;
+}
+.record-btn:active {
+  background-color: #fff;
+  color: #fff;
+}
+.record-btn:focus {
+  outline: 0;
+}

@@ -6,25 +6,15 @@ import { setupCamera, captureImage } from "./record.js";
 import SignLanguageClassifyModel from "./ML/signClassify.js";
 import { drawResult } from "./drawkeypoints.js";
 import { sendDataToCloud } from "./sendData.js";
+import { removeChild, checkArrayMatch } from "./utils.js";
 
 window.recoil = {
   selectSign: "",
   recordClickable: true,
 };
 
-// TODO: select no and appear correction modal
-// push lang to correction modal
-
-/**
- * project states:
- *  loading model >> idle >> record >> processing model >> result >> result no >> update to cloud
- * loading model
- *  - processing-modal
- * idle
- *  -
- */
-
 $(document).ready(() => {
+  // page state management
   const page_changeState = (input) => {
     const processingModal = document.querySelector(".processing-modal");
     const processingText = document.querySelector(".processing-text");
@@ -90,6 +80,7 @@ $(document).ready(() => {
         break;
     }
   };
+  // record state management
   const record_changeState = (input) => {
     const recordBtn = document.getElementById("record-btn-id");
     switch (input) {
@@ -109,13 +100,10 @@ $(document).ready(() => {
   initVideoSeleciton();
   setupCamera();
 
-  let isInitModel = false;
-
   const classifyModel = new SignLanguageClassifyModel();
 
   const initmodel = async () => {
-    const result = await classifyModel.initModel();
-    isInitModel = result;
+    await classifyModel.initModel();
     page_changeState("idle");
     console.log("init model finish");
   };
@@ -123,7 +111,7 @@ $(document).ready(() => {
   initmodel();
 
   /**
-   * flow:
+   * Flow:
    * init video
    * init model
    * set upCamera
@@ -135,20 +123,6 @@ $(document).ready(() => {
    * set state to result
    * show result [table, drawImage, sort accuracy sign result]
    */
-
-  const removeChild = (inputClass) => {
-    return new Promise((resolve) => {
-      const parent = document.querySelector(inputClass);
-
-      let child = parent.lastElementChild;
-      while (child) {
-        console.log("child: ", child);
-        parent.removeChild(child);
-        child = parent.lastElementChild;
-      }
-      resolve("finished");
-    });
-  };
 
   let showResultCanvas = 0;
   const sliderFrame = document.getElementById("frame-canvas-slider");
@@ -177,13 +151,6 @@ $(document).ready(() => {
   const RESULT_RIGHTHAND_STACK = [];
   const topFiveResultArr = [];
   let signingResult = "";
-
-  const checkArrayMatch = (a, b) => {
-    const z = a.map((item) => {
-      return JSON.stringify(item);
-    });
-    return z.includes(JSON.stringify(b));
-  };
 
   const startClassify = () => {
     const thres = (IMAGE_STACK.length - 5) / 16;
@@ -239,7 +206,6 @@ $(document).ready(() => {
       const canvasWrapperEl = document.getElementById(
         "frame-canvas-wrapper-id"
       );
-      // await removeChild("#frame-canvas-wrapper-id");
       for (const i in PREDICTION_IMAGE_STACK) {
         const canvasEl = drawResult({
           imageData: PREDICTION_IMAGE_STACK[i].imageData,
@@ -262,7 +228,6 @@ $(document).ready(() => {
       signingResult = classifyResult.resultLabel;
 
       // update keypoint to table analyst
-      // await removeChild("#frame-table-body-id");
       const frameParentTable = document.getElementById("frame-table-body-id");
       await Promise.all(
         FRAME_KEYPOINTS_TABLE.map((item, index) => {
@@ -302,7 +267,6 @@ $(document).ready(() => {
       // update to result state
       // update top 5 result
       // remove exits table
-      // await removeChild("#table-body");
       const parentTable = document.getElementById("table-body");
       console.log("check remove child");
       for (let i = 0; i < 5; i++) {
@@ -496,7 +460,7 @@ $(document).ready(() => {
   // click no
   $("#improve-btn-no").on("click", () => {
     /**
-     * TODO:
+     * Flow:
      * open modal
      * change page state to open modal
      * select the right answer
@@ -509,7 +473,7 @@ $(document).ready(() => {
 
   $("#improve-btn-yes").on("click", () => {
     /**
-     * TODO:
+     * Flow:
      * send data to cloud
      * change page state to cloud
      */
