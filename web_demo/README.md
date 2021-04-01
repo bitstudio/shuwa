@@ -45,6 +45,7 @@ recording
 send captured images to ML
 ML process
 show result
+help us improve model ? sendData to cloud : back to record page
 ```
 
 # Code implementation
@@ -105,7 +106,7 @@ there are 4 methods but they are aim the same purpose which is initialize the te
 #### **predict**
 
 `predict(imagestack)`\
-this methods runs all prediction in once, which are detect pose face hand, and then classify. `imagestack` input argument must have the lenght of list equal to 16 (16 frames)\
+this methods runs all prediction in once, which are detect pose face hand, and then classify. `imagestack` input argument must have the lenght of list equal to 16 (16 frames)
 
 ```js
 const classifyResult = await classifyModel.predict([...`16 images`]);
