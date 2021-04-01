@@ -51,7 +51,9 @@ show result
 
 ## **signClassify**
 
-there is a script that was implemented for classify the sign-language model name `signClassify.js`, located at `./js/ML` directory. Here the usage example
+there is a script that was implemented for classify the sign-language model name `signClassify.js`, located at `./js/ML` directory.
+
+### usage exaple
 
 ```js
 import SignLanguageClassifyModel from "./ML/signClassify.js";
@@ -94,13 +96,13 @@ console.log(classifyResult.resultLabel);
 // classifyResult consist of 2 items: resutlLabel and resultArray
 ```
 
-## Methods
+### Methods
 
-### **init**
+#### **init**
 
 there are 4 methods but they are aim the same purpose which is initialize the tensorflow model. `initModel()` was use for initialize all models in one call: pose, face, hand, and classify in one call. The others, `initPose()`, `initFace()`, `initHand()`, and `initClassify()`, were created in-case if you want to optimize the model loading.
 
-### **predict**
+#### **predict**
 
 `predict(imagestack)`\
 this methods runs all prediction in once, which are detect pose face hand, and then classify. `imagestack` input argument must have the lenght of list equal to 16 (16 frames)\
