@@ -53,7 +53,7 @@ show result
 
 there is a script that was implemented for classify the sign-language model name `signClassify.js`, located at `./js/ML` directory.
 
-### usage exaple
+### usage example
 
 ```js
 import SignLanguageClassifyModel from "./ML/signClassify.js";
