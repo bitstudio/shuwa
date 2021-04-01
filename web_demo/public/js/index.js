@@ -127,9 +127,7 @@ $(document).ready(() => {
   let showResultCanvas = 0;
   const sliderFrame = document.getElementById("frame-canvas-slider");
   const selectFrameResult = (index) => {
-    const previousCanvas = document.getElementById(
-      `image-frame-${showResultCanvas}`
-    );
+    const previousCanvas = document.getElementById(`image-frame-${showResultCanvas}`);
     if (previousCanvas) previousCanvas.style.display = "none";
     const selectedCanvas = document.getElementById(`image-frame-${index}`);
     if (selectedCanvas) selectedCanvas.style.display = "flex";
@@ -167,9 +165,7 @@ $(document).ready(() => {
     const predictionImage = async () => {
       for (const image_index in PREDICTION_IMAGE_STACK) {
         console.log(image_index);
-        const result = await classifyModel.predictImage(
-          PREDICTION_IMAGE_STACK[image_index].imageData
-        );
+        const result = await classifyModel.predictImage(PREDICTION_IMAGE_STACK[image_index].imageData);
         console.log(result);
         const isPose = !checkArrayMatch(result.pose, [0, 0]);
         const isFace = !checkArrayMatch(result.face, [0, 0]);
@@ -199,13 +195,12 @@ $(document).ready(() => {
       const cmp = (a, b) => {
         return b[1] > a[1] ? 1 : -1;
       };
+      // sorted the rank of sign result
       const sortedArray = classifyResult.resultArray.sort(cmp);
       console.log(sortedArray);
 
       // get all stack keypoints and image stack send to draw key points
-      const canvasWrapperEl = document.getElementById(
-        "frame-canvas-wrapper-id"
-      );
+      const canvasWrapperEl = document.getElementById("frame-canvas-wrapper-id");
       for (const i in PREDICTION_IMAGE_STACK) {
         const canvasEl = drawResult({
           imageData: PREDICTION_IMAGE_STACK[i].imageData,
@@ -231,6 +226,7 @@ $(document).ready(() => {
       const frameParentTable = document.getElementById("frame-table-body-id");
       await Promise.all(
         FRAME_KEYPOINTS_TABLE.map((item, index) => {
+          // append data to html table
           const thisTable = document.createElement("tr");
           thisTable.setAttribute("key", index);
           thisTable.addEventListener("click", () => {
@@ -246,14 +242,10 @@ $(document).ready(() => {
           isFaceNode.style.backgroundColor = item.face ? "#7ecbbd" : "#de5246";
           const isLeftHandNode = document.createElement("td");
           isLeftHandNode.innerHTML = item.leftHand ? "yes" : "no";
-          isLeftHandNode.style.backgroundColor = item.leftHand
-            ? "#7ecbbd"
-            : "#de5246";
+          isLeftHandNode.style.backgroundColor = item.leftHand ? "#7ecbbd" : "#de5246";
           const isRightHandNode = document.createElement("td");
           isRightHandNode.innerHTML = item.rightHand ? "yes" : "no";
-          isRightHandNode.style.backgroundColor = item.rightHand
-            ? "#7ecbbd"
-            : "#de5246";
+          isRightHandNode.style.backgroundColor = item.rightHand ? "#7ecbbd" : "#de5246";
 
           thisTable.appendChild(frameNode);
           thisTable.appendChild(isPoseNode);
@@ -358,37 +350,25 @@ $(document).ready(() => {
     e.target.classList.add("active");
   });
   $("#correction-modal-language-hksl-btn").on("click", (e) => {
-    const correction_jsl_table = document.querySelector(
-      ".jsl-correction-sign-table"
-    );
-    const correction_hksl_table = document.querySelector(
-      ".hksl-correction-sign-table"
-    );
+    const correction_jsl_table = document.querySelector(".jsl-correction-sign-table");
+    const correction_hksl_table = document.querySelector(".hksl-correction-sign-table");
     correction_jsl_table.style.display = "none";
     correction_hksl_table.style.display = "unset";
 
-    document
-      .getElementsByClassName("correction-language-btn")
-      .forEach((item) => {
-        item.classList.remove("active");
-      });
+    document.getElementsByClassName("correction-language-btn").forEach((item) => {
+      item.classList.remove("active");
+    });
     e.target.classList.add("active");
   });
   $("#correction-modal-language-jsl-btn").on("click", (e) => {
-    const correction_jsl_table = document.querySelector(
-      ".jsl-correction-sign-table"
-    );
-    const correction_hksl_table = document.querySelector(
-      ".hksl-correction-sign-table"
-    );
+    const correction_jsl_table = document.querySelector(".jsl-correction-sign-table");
+    const correction_hksl_table = document.querySelector(".hksl-correction-sign-table");
     correction_jsl_table.style.display = "unset";
     correction_hksl_table.style.display = "none";
 
-    document
-      .getElementsByClassName("correction-language-btn")
-      .forEach((item) => {
-        item.classList.remove("active");
-      });
+    document.getElementsByClassName("correction-language-btn").forEach((item) => {
+      item.classList.remove("active");
+    });
     e.target.classList.add("active");
   });
 
@@ -461,11 +441,7 @@ $(document).ready(() => {
       page_changeState("idle");
     };
     page_changeState("upload");
-    sendDataToCloud(
-      PREDICTION_IMAGE_STACK,
-      window.recoil.selectSign,
-      finishUpload
-    );
+    sendDataToCloud(PREDICTION_IMAGE_STACK, window.recoil.selectSign, finishUpload);
   });
   $("#correction-cancel-btn").on("click", (e) => {
     page_changeState("result");

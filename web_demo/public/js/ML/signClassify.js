@@ -1,14 +1,5 @@
-import {
-  decodePose,
-  local2GlobalKeypoints,
-  getRadians,
-  getDistance,
-} from "./utility.js";
-import {
-  SELECTED_POSENET_JOINTS,
-  SELECTED_FACE_POINTS,
-  LABELS,
-} from "./const.js";
+import { decodePose, local2GlobalKeypoints, getRadians, getDistance } from "./utility.js";
+import { SELECTED_POSENET_JOINTS, SELECTED_FACE_POINTS, LABELS } from "./const.js";
 
 export default class SignLanguageClassifyModel {
   constructor() {
@@ -55,21 +46,15 @@ export default class SignLanguageClassifyModel {
       await this.poseModel.predict(tf.zeros([1, 257, 257, 3]));
       console.log(`Pose model loaded`);
       // init faceMeshModel
-      this.faceMeshModel = await tf.loadGraphModel(
-        "./model/face/js_f16/model.json"
-      );
+      this.faceMeshModel = await tf.loadGraphModel("./model/face/js_f16/model.json");
       await this.faceMeshModel.predict(tf.zeros([1, 192, 192, 3]));
       console.log(`Face model loaded`);
       // init handPoseModel
-      this.handPoseModel = await tf.loadGraphModel(
-        "./model/hand/js_f16/model.json"
-      );
+      this.handPoseModel = await tf.loadGraphModel("./model/hand/js_f16/model.json");
       await this.handPoseModel.predict(tf.zeros([1, 256, 256, 3]));
       console.log(`hand model loaded`);
       // init classifyModel
-      this.classifyModel = await tf.loadGraphModel(
-        "./model/classification/phase_1/model.json"
-      );
+      this.classifyModel = await tf.loadGraphModel("./model/classification/phase_1/model.json");
 
       const poseArr = tf.zeros([1, 16, 13, 2]);
       const faceArr = tf.zeros([1, 16, 24, 2]);
@@ -105,9 +90,7 @@ export default class SignLanguageClassifyModel {
 
   async initFace() {
     return new Promise(async (resolve) => {
-      this.faceMeshModel = await tf.loadGraphModel(
-        "./model/face/js_f16/model.json"
-      );
+      this.faceMeshModel = await tf.loadGraphModel("./model/face/js_f16/model.json");
       await this.faceMeshModel.predict(tf.zeros([1, 192, 192, 3]));
       console.log(`Face model loaded`);
       resolve(true);
@@ -116,9 +99,7 @@ export default class SignLanguageClassifyModel {
 
   async initHand() {
     return new Promise(async (resolve) => {
-      this.handPoseModel = await tf.loadGraphModel(
-        "./model/hand/js_f16/model.json"
-      );
+      this.handPoseModel = await tf.loadGraphModel("./model/hand/js_f16/model.json");
       await this.handPoseModel.predict(tf.zeros([1, 256, 256, 3]));
       console.log(`hand model loaded`);
       resolve(true);
@@ -127,9 +108,7 @@ export default class SignLanguageClassifyModel {
 
   async initClassify() {
     return new Promise(async (resolve) => {
-      this.classifyModel = await tf.loadGraphModel(
-        "./model/classification/phase_1/model.json"
-      );
+      this.classifyModel = await tf.loadGraphModel("./model/classification/phase_1/model.json");
 
       const poseArr = tf.zeros([1, 16, 13, 2]);
       const faceArr = tf.zeros([1, 16, 24, 2]);
@@ -163,11 +142,7 @@ export default class SignLanguageClassifyModel {
         const tic = Date.now();
         console.log("image: ", image);
         const imageInputTensor = tf
-          .slice(
-            tf.tensor3d(Array.from(image.data), [257, 257, 4]),
-            [0, 0, 0],
-            [257, 257, 3]
-          )
+          .slice(tf.tensor3d(Array.from(image.data), [257, 257, 4]), [0, 0, 0], [257, 257, 3])
           .toFloat()
           .expandDims(0);
         const inputTensor = imageInputTensor.div(127.5).sub(1);
@@ -180,11 +155,7 @@ export default class SignLanguageClassifyModel {
         inputTensor.dispose();
 
         console.log(poseResult);
-        const POSE = await decodePose(
-          poseResult[0].squeeze(0),
-          poseResult[1].squeeze(0),
-          16
-        );
+        const POSE = await decodePose(poseResult[0].squeeze(0), poseResult[1].squeeze(0), 16);
         console.log(POSE);
         // -- to this
 
@@ -197,19 +168,13 @@ export default class SignLanguageClassifyModel {
               POSE.keypoints[i].position.x = 0;
               POSE.keypoints[i].position.y = 0;
             }
-            poseResultKeypoints.push([
-              POSE.keypoints[i].position.x,
-              POSE.keypoints[i].position.y,
-            ]);
+            poseResultKeypoints.push([POSE.keypoints[i].position.x, POSE.keypoints[i].position.y]);
             if (POSE.keypoints[i].part === "leftWrist") {
               if (POSE.keypoints[i].score < THRESHOULD) {
                 this.leftHand.isFound = false;
               } else {
                 this.leftHand.isFound = true;
-                this.leftHand.writsKeypoint = [
-                  POSE.keypoints[i].position.x,
-                  POSE.keypoints[i].position.y,
-                ];
+                this.leftHand.writsKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
               }
             }
 
@@ -218,10 +183,7 @@ export default class SignLanguageClassifyModel {
                 this.rightHand.isFound = false;
               } else {
                 this.rightHand.isFound = true;
-                this.rightHand.writsKeypoint = [
-                  POSE.keypoints[i].position.x,
-                  POSE.keypoints[i].position.y,
-                ];
+                this.rightHand.writsKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
               }
             }
 
@@ -230,10 +192,7 @@ export default class SignLanguageClassifyModel {
                 this.leftHand.isFound = false;
               } else {
                 this.leftHand.isFound = true;
-                this.leftHand.midfinKeypoint = [
-                  POSE.keypoints[i].position.x,
-                  POSE.keypoints[i].position.y,
-                ];
+                this.leftHand.midfinKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
               }
             }
 
@@ -242,65 +201,33 @@ export default class SignLanguageClassifyModel {
                 this.rightHand.isFound = false;
               } else {
                 this.rightHand.isFound = true;
-                this.rightHand.midfinKeypoint = [
-                  POSE.keypoints[i].position.x,
-                  POSE.keypoints[i].position.y,
-                ];
+                this.rightHand.midfinKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
               }
             }
 
             if (POSE.keypoints[i].part === "rightEar") {
-              this.faceObj.rightEarKeypoint = [
-                POSE.keypoints[i].position.x,
-                POSE.keypoints[i].position.y,
-              ];
+              this.faceObj.rightEarKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
             }
             if (POSE.keypoints[i].part === "leftEar") {
-              this.faceObj.leftEarKeypoint = [
-                POSE.keypoints[i].position.x,
-                POSE.keypoints[i].position.y,
-              ];
+              this.faceObj.leftEarKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
             }
           }
         }
-        this.faceObj.radians = await getRadians(
-          this.faceObj.leftEarKeypoint,
-          this.faceObj.rightEarKeypoint,
-          1
-        );
-        this.leftHand.radians = await getRadians(
-          this.leftHand.writsKeypoint,
-          this.leftHand.midfinKeypoint,
-          2
-        );
-        this.rightHand.radians = await getRadians(
-          this.rightHand.writsKeypoint,
-          this.rightHand.midfinKeypoint,
-          2
-        );
+        this.faceObj.radians = await getRadians(this.faceObj.leftEarKeypoint, this.faceObj.rightEarKeypoint, 1);
+        this.leftHand.radians = await getRadians(this.leftHand.writsKeypoint, this.leftHand.midfinKeypoint, 2);
+        this.rightHand.radians = await getRadians(this.rightHand.writsKeypoint, this.rightHand.midfinKeypoint, 2);
 
         this.faceObj.center = [
-          (this.faceObj.rightEarKeypoint[0] + this.faceObj.leftEarKeypoint[0]) /
-            2,
-          (this.faceObj.rightEarKeypoint[1] + this.faceObj.leftEarKeypoint[1]) /
-            2,
+          (this.faceObj.rightEarKeypoint[0] + this.faceObj.leftEarKeypoint[0]) / 2,
+          (this.faceObj.rightEarKeypoint[1] + this.faceObj.leftEarKeypoint[1]) / 2,
         ];
-        this.faceObj.distance = await getDistance(
-          this.faceObj.leftEarKeypoint,
-          this.faceObj.rightEarKeypoint
-        );
+        this.faceObj.distance = await getDistance(this.faceObj.leftEarKeypoint, this.faceObj.rightEarKeypoint);
 
         this.leftHand.center = this.leftHand.midfinKeypoint;
-        this.leftHand.distance = await getDistance(
-          this.leftHand.writsKeypoint,
-          this.leftHand.midfinKeypoint
-        );
+        this.leftHand.distance = await getDistance(this.leftHand.writsKeypoint, this.leftHand.midfinKeypoint);
 
         this.rightHand.center = this.rightHand.midfinKeypoint;
-        this.rightHand.distance = await getDistance(
-          this.rightHand.writsKeypoint,
-          this.rightHand.midfinKeypoint
-        );
+        this.rightHand.distance = await getDistance(this.rightHand.writsKeypoint, this.rightHand.midfinKeypoint);
 
         const leftHandResult = await this.handPrediction(
           this.leftHand.radians,
@@ -330,12 +257,10 @@ export default class SignLanguageClassifyModel {
         }
 
         const input_tensor = imageInputTensor;
-        const faceRotatedImage = tf.image.rotateWithOffset(
-          input_tensor,
-          this.faceObj.radians,
-          0,
-          [this.faceObj.center[0] / 257, this.faceObj.center[1] / 257]
-        );
+        const faceRotatedImage = tf.image.rotateWithOffset(input_tensor, this.faceObj.radians, 0, [
+          this.faceObj.center[0] / 257,
+          this.faceObj.center[1] / 257,
+        ]);
         input_tensor.dispose();
         tf.env().set("WEBGL_DELETE_TEXTURE_THRESHOLD", 100 * 1024 * 1024);
         const cropImage = tf.image.cropAndResize(
@@ -356,19 +281,12 @@ export default class SignLanguageClassifyModel {
         const faceArrKeypoints = [];
 
         for (let i of SELECTED_FACE_POINTS) {
-          faceArrKeypoints.push([
-            face[1].dataSync()[i * 3],
-            face[1].dataSync()[i * 3 + 1],
-          ]);
+          faceArrKeypoints.push([face[1].dataSync()[i * 3], face[1].dataSync()[i * 3 + 1]]);
         }
         this.faceObj.result = (
           await local2GlobalKeypoints(
             faceArrKeypoints,
-            [
-              this.faceObj.center,
-              this.faceObj.distance * 2,
-              this.faceObj.radians,
-            ],
+            [this.faceObj.center, this.faceObj.distance * 2, this.faceObj.radians],
             192
           )
         ).reshape([24, 2]);
@@ -399,33 +317,16 @@ export default class SignLanguageClassifyModel {
         4 // shrinkAxisMask
       );
       noseStack = noseStack.reshape([1, 16, 1, 2]);
-      poseStacksTensor = poseStacksTensor.sub(
-        tf.broadcastTo(noseStack, poseStacksTensor.shape)
-      );
+      poseStacksTensor = poseStacksTensor.sub(tf.broadcastTo(noseStack, poseStacksTensor.shape));
       // face
-      let faceStacksTensor = tf
-        .tensor3d(faceStacks)
-        .div(257)
-        .reshape([1, 16, 24, 2]);
-      faceStacksTensor = faceStacksTensor.sub(
-        tf.broadcastTo(noseStack, faceStacksTensor.shape)
-      );
+      let faceStacksTensor = tf.tensor3d(faceStacks).div(257).reshape([1, 16, 24, 2]);
+      faceStacksTensor = faceStacksTensor.sub(tf.broadcastTo(noseStack, faceStacksTensor.shape));
       // leftHand
-      let leftHandStacksTensor = tf
-        .tensor3d(leftHandStacks)
-        .div(257)
-        .reshape([1, 16, 21, 2]);
-      leftHandStacksTensor = leftHandStacksTensor.sub(
-        tf.broadcastTo(noseStack, leftHandStacksTensor.shape)
-      );
+      let leftHandStacksTensor = tf.tensor3d(leftHandStacks).div(257).reshape([1, 16, 21, 2]);
+      leftHandStacksTensor = leftHandStacksTensor.sub(tf.broadcastTo(noseStack, leftHandStacksTensor.shape));
       // rightHand
-      let rightHandStacksTensor = tf
-        .tensor3d(rightHandStacks)
-        .div(257)
-        .reshape([1, 16, 21, 2]);
-      rightHandStacksTensor = rightHandStacksTensor.sub(
-        tf.broadcastTo(noseStack, rightHandStacksTensor.shape)
-      );
+      let rightHandStacksTensor = tf.tensor3d(rightHandStacks).div(257).reshape([1, 16, 21, 2]);
+      rightHandStacksTensor = rightHandStacksTensor.sub(tf.broadcastTo(noseStack, rightHandStacksTensor.shape));
       const wordResult = await this.classifyModel.predict({
         pose_frames_input: poseStacksTensor,
         face_frames_input: faceStacksTensor,
@@ -433,7 +334,7 @@ export default class SignLanguageClassifyModel {
         right_hand_frames_input: rightHandStacksTensor,
       });
       // result to strings
-      const predictionResult = wordResult[1].dataSync();
+      const predictionResult = wordResult[0].dataSync();
 
       poseStacksTensor.dispose();
       faceStacksTensor.dispose();
@@ -446,8 +347,7 @@ export default class SignLanguageClassifyModel {
 
       tf.engine().endScope();
       resolve({
-        resultLabel:
-          LABELS[predictionResult.indexOf(Math.max(...predictionResult))],
+        resultLabel: LABELS[predictionResult.indexOf(Math.max(...predictionResult))],
         resultArray: predictionResult,
       });
     });
@@ -456,12 +356,7 @@ export default class SignLanguageClassifyModel {
   async handPrediction(radians, distanceHand, center, imageInputTensor) {
     const input_tensor = imageInputTensor;
 
-    const rotatedHandImage = tf.image.rotateWithOffset(
-      input_tensor,
-      radians,
-      0,
-      center
-    );
+    const rotatedHandImage = tf.image.rotateWithOffset(input_tensor, radians, 0, center);
     input_tensor.dispose();
     tf.env().set("WEBGL_DELETE_TEXTURE_THRESHOLD", 100 * 1024 * 1024);
     const cropedHandImage = tf.image.cropAndResize(
@@ -484,11 +379,7 @@ export default class SignLanguageClassifyModel {
     cropedHandImage.dispose();
     let handSelected = hand[2].dataSync();
     let handArrKeypoints = [];
-    for (
-      let i = 0, point = 0, n = handSelected.length;
-      i < n;
-      i += 3, point += 1
-    ) {
+    for (let i = 0, point = 0, n = handSelected.length; i < n; i += 3, point += 1) {
       handArrKeypoints.push([handSelected[i], handSelected[i + 1]]);
     }
     let handResultKeypoints = await local2GlobalKeypoints(
@@ -512,11 +403,7 @@ export default class SignLanguageClassifyModel {
       const tic = Date.now();
       // console.log('image: ', image);
       const imageInputTensor = tf
-        .slice(
-          tf.tensor3d(Array.from(image.data), [257, 257, 4]),
-          [0, 0, 0],
-          [257, 257, 3]
-        )
+        .slice(tf.tensor3d(Array.from(image.data), [257, 257, 4]), [0, 0, 0], [257, 257, 3])
         .toFloat()
         .expandDims(0);
       const inputTensor = imageInputTensor.div(127.5).sub(1);
@@ -529,11 +416,7 @@ export default class SignLanguageClassifyModel {
       inputTensor.dispose();
 
       // console.log(poseResult);
-      const POSE = await decodePose(
-        poseResult[0].squeeze(0),
-        poseResult[1].squeeze(0),
-        16
-      );
+      const POSE = await decodePose(poseResult[0].squeeze(0), poseResult[1].squeeze(0), 16);
       // console.log(POSE);
       // -- to this
 
@@ -546,19 +429,13 @@ export default class SignLanguageClassifyModel {
             POSE.keypoints[i].position.x = 0;
             POSE.keypoints[i].position.y = 0;
           }
-          poseResultKeypoints.push([
-            POSE.keypoints[i].position.x,
-            POSE.keypoints[i].position.y,
-          ]);
+          poseResultKeypoints.push([POSE.keypoints[i].position.x, POSE.keypoints[i].position.y]);
           if (POSE.keypoints[i].part === "leftWrist") {
             if (POSE.keypoints[i].score < THRESHOULD) {
               this.leftHand.isFound = false;
             } else {
               this.leftHand.isFound = true;
-              this.leftHand.writsKeypoint = [
-                POSE.keypoints[i].position.x,
-                POSE.keypoints[i].position.y,
-              ];
+              this.leftHand.writsKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
             }
           }
 
@@ -567,10 +444,7 @@ export default class SignLanguageClassifyModel {
               this.rightHand.isFound = false;
             } else {
               this.rightHand.isFound = true;
-              this.rightHand.writsKeypoint = [
-                POSE.keypoints[i].position.x,
-                POSE.keypoints[i].position.y,
-              ];
+              this.rightHand.writsKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
             }
           }
 
@@ -579,10 +453,7 @@ export default class SignLanguageClassifyModel {
               this.leftHand.isFound = false;
             } else {
               this.leftHand.isFound = true;
-              this.leftHand.midfinKeypoint = [
-                POSE.keypoints[i].position.x,
-                POSE.keypoints[i].position.y,
-              ];
+              this.leftHand.midfinKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
             }
           }
 
@@ -591,65 +462,33 @@ export default class SignLanguageClassifyModel {
               this.rightHand.isFound = false;
             } else {
               this.rightHand.isFound = true;
-              this.rightHand.midfinKeypoint = [
-                POSE.keypoints[i].position.x,
-                POSE.keypoints[i].position.y,
-              ];
+              this.rightHand.midfinKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
             }
           }
 
           if (POSE.keypoints[i].part === "rightEar") {
-            this.faceObj.rightEarKeypoint = [
-              POSE.keypoints[i].position.x,
-              POSE.keypoints[i].position.y,
-            ];
+            this.faceObj.rightEarKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
           }
           if (POSE.keypoints[i].part === "leftEar") {
-            this.faceObj.leftEarKeypoint = [
-              POSE.keypoints[i].position.x,
-              POSE.keypoints[i].position.y,
-            ];
+            this.faceObj.leftEarKeypoint = [POSE.keypoints[i].position.x, POSE.keypoints[i].position.y];
           }
         }
       }
-      this.faceObj.radians = await getRadians(
-        this.faceObj.leftEarKeypoint,
-        this.faceObj.rightEarKeypoint,
-        1
-      );
-      this.leftHand.radians = await getRadians(
-        this.leftHand.writsKeypoint,
-        this.leftHand.midfinKeypoint,
-        2
-      );
-      this.rightHand.radians = await getRadians(
-        this.rightHand.writsKeypoint,
-        this.rightHand.midfinKeypoint,
-        2
-      );
+      this.faceObj.radians = await getRadians(this.faceObj.leftEarKeypoint, this.faceObj.rightEarKeypoint, 1);
+      this.leftHand.radians = await getRadians(this.leftHand.writsKeypoint, this.leftHand.midfinKeypoint, 2);
+      this.rightHand.radians = await getRadians(this.rightHand.writsKeypoint, this.rightHand.midfinKeypoint, 2);
 
       this.faceObj.center = [
-        (this.faceObj.rightEarKeypoint[0] + this.faceObj.leftEarKeypoint[0]) /
-          2,
-        (this.faceObj.rightEarKeypoint[1] + this.faceObj.leftEarKeypoint[1]) /
-          2,
+        (this.faceObj.rightEarKeypoint[0] + this.faceObj.leftEarKeypoint[0]) / 2,
+        (this.faceObj.rightEarKeypoint[1] + this.faceObj.leftEarKeypoint[1]) / 2,
       ];
-      this.faceObj.distance = await getDistance(
-        this.faceObj.leftEarKeypoint,
-        this.faceObj.rightEarKeypoint
-      );
+      this.faceObj.distance = await getDistance(this.faceObj.leftEarKeypoint, this.faceObj.rightEarKeypoint);
 
       this.leftHand.center = this.leftHand.midfinKeypoint;
-      this.leftHand.distance = await getDistance(
-        this.leftHand.writsKeypoint,
-        this.leftHand.midfinKeypoint
-      );
+      this.leftHand.distance = await getDistance(this.leftHand.writsKeypoint, this.leftHand.midfinKeypoint);
 
       this.rightHand.center = this.rightHand.midfinKeypoint;
-      this.rightHand.distance = await getDistance(
-        this.rightHand.writsKeypoint,
-        this.rightHand.midfinKeypoint
-      );
+      this.rightHand.distance = await getDistance(this.rightHand.writsKeypoint, this.rightHand.midfinKeypoint);
 
       const leftHandResult = await this.handPrediction(
         this.leftHand.radians,
@@ -682,12 +521,10 @@ export default class SignLanguageClassifyModel {
       // const rightHandDebug = this.rightHand.result.dataSync();
 
       const input_tensor = imageInputTensor;
-      const faceRotatedImage = tf.image.rotateWithOffset(
-        input_tensor,
-        this.faceObj.radians,
-        0,
-        [this.faceObj.center[0] / 257, this.faceObj.center[1] / 257]
-      );
+      const faceRotatedImage = tf.image.rotateWithOffset(input_tensor, this.faceObj.radians, 0, [
+        this.faceObj.center[0] / 257,
+        this.faceObj.center[1] / 257,
+      ]);
       input_tensor.dispose();
       tf.env().set("WEBGL_DELETE_TEXTURE_THRESHOLD", 100 * 1024 * 1024);
       const cropImage = tf.image.cropAndResize(
@@ -708,19 +545,12 @@ export default class SignLanguageClassifyModel {
       const faceArrKeypoints = [];
 
       for (let i of SELECTED_FACE_POINTS) {
-        faceArrKeypoints.push([
-          face[1].dataSync()[i * 3],
-          face[1].dataSync()[i * 3 + 1],
-        ]);
+        faceArrKeypoints.push([face[1].dataSync()[i * 3], face[1].dataSync()[i * 3 + 1]]);
       }
       this.faceObj.result = (
         await local2GlobalKeypoints(
           faceArrKeypoints,
-          [
-            this.faceObj.center,
-            this.faceObj.distance * 2,
-            this.faceObj.radians,
-          ],
+          [this.faceObj.center, this.faceObj.distance * 2, this.faceObj.radians],
           192
         )
       ).reshape([24, 2]);
@@ -767,33 +597,16 @@ export default class SignLanguageClassifyModel {
         4 // shrinkAxisMask
       );
       noseStack = noseStack.reshape([1, 16, 1, 2]);
-      poseStacksTensor = poseStacksTensor.sub(
-        tf.broadcastTo(noseStack, poseStacksTensor.shape)
-      );
+      poseStacksTensor = poseStacksTensor.sub(tf.broadcastTo(noseStack, poseStacksTensor.shape));
       // face
-      let faceStacksTensor = tf
-        .tensor3d(inputStack.faceStack)
-        .div(257)
-        .reshape([1, 16, 24, 2]);
-      faceStacksTensor = faceStacksTensor.sub(
-        tf.broadcastTo(noseStack, faceStacksTensor.shape)
-      );
+      let faceStacksTensor = tf.tensor3d(inputStack.faceStack).div(257).reshape([1, 16, 24, 2]);
+      faceStacksTensor = faceStacksTensor.sub(tf.broadcastTo(noseStack, faceStacksTensor.shape));
       // leftHand
-      let leftHandStacksTensor = tf
-        .tensor3d(inputStack.leftHandStack)
-        .div(257)
-        .reshape([1, 16, 21, 2]);
-      leftHandStacksTensor = leftHandStacksTensor.sub(
-        tf.broadcastTo(noseStack, leftHandStacksTensor.shape)
-      );
+      let leftHandStacksTensor = tf.tensor3d(inputStack.leftHandStack).div(257).reshape([1, 16, 21, 2]);
+      leftHandStacksTensor = leftHandStacksTensor.sub(tf.broadcastTo(noseStack, leftHandStacksTensor.shape));
       // rightHand
-      let rightHandStacksTensor = tf
-        .tensor3d(inputStack.rightHandStack)
-        .div(257)
-        .reshape([1, 16, 21, 2]);
-      rightHandStacksTensor = rightHandStacksTensor.sub(
-        tf.broadcastTo(noseStack, rightHandStacksTensor.shape)
-      );
+      let rightHandStacksTensor = tf.tensor3d(inputStack.rightHandStack).div(257).reshape([1, 16, 21, 2]);
+      rightHandStacksTensor = rightHandStacksTensor.sub(tf.broadcastTo(noseStack, rightHandStacksTensor.shape));
       const wordResult = await this.classifyModel.predict({
         pose_frames_input: poseStacksTensor,
         face_frames_input: faceStacksTensor,
@@ -815,8 +628,7 @@ export default class SignLanguageClassifyModel {
         return item;
       });
       resolve({
-        resultLabel:
-          LABELS[predictionResult.indexOf(Math.max(...predictionResult))],
+        resultLabel: LABELS[predictionResult.indexOf(Math.max(...predictionResult))],
         resultArray: ResultArray,
       });
     });
