@@ -1,6 +1,6 @@
 # Shuwa
 
-## [[Blog post]()] [[Web demo](https://bitstudio.github.io/web_demo/public)]
+## [[Blog post]()] [[Web demo](https://bitstudio.github.io/shuwa/web_demo/public)]
 
 Shuwa ML is a Deep Learning model pipeline that classify sign language from input video, Implemented in tensorflow2.
 
