@@ -41,7 +41,8 @@ class HandManager():
     def __call__(self, image_list):
         
         ratio, net_input = self.preprocess_input(image_list)
-        net_output = self.model(net_input)
+        
+        net_output = self.model(net_input)           
         hands_flags, hands_keypoints = self.postprocess_output(net_output)
         
         return hands_flags, hands_keypoints * ratio

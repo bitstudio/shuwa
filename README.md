@@ -21,7 +21,7 @@ All related models listed below.
 
 - For MacOS user  
   Install python 3.7 from [`official python.org`](https://www.python.org/downloads/release/python-379/) for tkinter support.
-  * There are still some UI bugs on MacOS. 
+
 
 - Install dependencies
   ```
@@ -33,8 +33,6 @@ All related models listed below.
 ```
 python3 webcam_demo_knn.py
 ```
-
-You can also press 'R' to start/stop recording.
 
 - Use record mode to add more sign.  
   ![record_mode](assets/record_mode.gif)
