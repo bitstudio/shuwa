@@ -45,7 +45,7 @@ recording
 send captured images to ML
 ML process
 show result
-help us improve model ? sendData to cloud : back to record page
+back to record page
 ```
 
 # Code implementation
