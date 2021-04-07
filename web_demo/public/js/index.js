@@ -5,7 +5,6 @@ import { setupCamera, captureImage } from "./record.js";
 
 import SignLanguageClassifyModel from "./ML/signClassify.js";
 import { drawResult } from "./drawkeypoints.js";
-import { sendDataToCloud } from "./sendData.js";
 import { removeChild, checkArrayMatch } from "./utils.js";
 
 window.recoil = {
@@ -372,47 +371,6 @@ $(document).ready(() => {
     e.target.classList.add("active");
   });
 
-  /**
-   * toggle check to improve
-   * click result not correct
-   * | case result not correct |
-   * | open modal >> user select the correct choice >> |
-   * | yes >> send 16 frame to database |
-   * ---- ---- ---- ---- ----
-   * | case result correct |
-   * | send 16 frame to database |
-   */
-
-  let toggle_check = false;
-  const improveWrapper = document.querySelector(".improve-wrapper");
-  const notImproveWrapper = document.querySelector(".not-improve-wrapper");
-  $("#toggle-improve-check-id").on("click", (e) => {
-    if (e.target.checked === true) {
-      console.log("check!");
-      toggle_check = true;
-      improveWrapper.style.transform = "translate(-50%, 0%)";
-      notImproveWrapper.style.transform = "translate(-50%, -100%)";
-    } else {
-      console.log("uncheck");
-      toggle_check = false;
-      improveWrapper.style.transform = "translate(-50%, 100%)";
-      notImproveWrapper.style.transform = "translate(-50%, 0%)";
-    }
-  });
-  $("#toggle-improve-text").on("click", () => {
-    const togglebox = document.getElementById("toggle-improve-check-id");
-    togglebox.checked = !togglebox.checked;
-    if (toggle_check) {
-      toggle_check = false;
-      improveWrapper.style.transform = "translate(-50%, 100%)";
-      notImproveWrapper.style.transform = "translate(-50%, 0%)";
-    } else {
-      toggle_check = true;
-      improveWrapper.style.transform = "translate(-50%, 0%)";
-      notImproveWrapper.style.transform = "translate(-50%, -100%)";
-    }
-  });
-
   // click tryagain
   const clearStack = () => {
     removeChild("#frame-table-body-id");
@@ -431,48 +389,5 @@ $(document).ready(() => {
     clearStack();
     window.recoil.recordClickable = true;
     page_changeState("idle");
-  });
-
-  $("#correction-submit-btn").on("click", (e) => {
-    const finishUpload = () => {
-      console.log("finish upload");
-      clearStack();
-      window.recoil.recordClickable = true;
-      page_changeState("idle");
-    };
-    page_changeState("upload");
-    sendDataToCloud(PREDICTION_IMAGE_STACK, window.recoil.selectSign, finishUpload);
-  });
-  $("#correction-cancel-btn").on("click", (e) => {
-    page_changeState("result");
-  });
-  // click no
-  $("#improve-btn-no").on("click", () => {
-    /**
-     * Flow:
-     * open modal
-     * change page state to open modal
-     * select the right answer
-     * click submit
-     * send data to database
-     * change page state to cloud
-     */
-    page_changeState("result_no");
-  });
-
-  $("#improve-btn-yes").on("click", () => {
-    /**
-     * Flow:
-     * send data to cloud
-     * change page state to cloud
-     */
-    const finishUpload = () => {
-      console.log("finish upload");
-      clearStack();
-      window.recoil.recordClickable = true;
-      page_changeState("idle");
-    };
-    page_changeState("upload");
-    sendDataToCloud(PREDICTION_IMAGE_STACK, signingResult, finishUpload);
   });
 });
