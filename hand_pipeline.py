@@ -59,9 +59,7 @@ class HandPipeline():
         hands_flags, local_hands_keypoints = self.hand_manager(hand_rgb_batch)                
 
         hand_idx = 0
-        batch_idx = 0
-        
-      
+        batch_idx = 0              
         for rect in rects:
             if (rect is not None) and (hands_flags[batch_idx] > HAND_LANDMARK_THRESHOLD):
                 

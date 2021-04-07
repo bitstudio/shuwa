@@ -1,19 +1,33 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import *
-
-
+import tkinter as tk
+import numpy as np
+from PIL import Image, ImageTk
 
 class DemoGUI:
+    
+    
+    def update_canvas(self):       
+        pil_im = Image.fromarray(self.frame_rgb_canvas).resize((480, 480))
+        self.photo = ImageTk.PhotoImage(image = pil_im)        
+        self.canvas.create_image(0, 0, image = self.photo, anchor = NW)     
+      
+            
     def __init__(self):
         super().__init__()
       
         self.root = tk.Tk()
-        self.root.title("GUI")    
-        # self.root.protocol('WM_DELETE_WINDOW', self.close_all)
-        self.root.geometry("400x150")
+        self.root.title("GUI")
+
+        self.root.geometry("500x630")
         
-        self.notebook = ttk.Notebook(self.root)              
+        self.notebook = ttk.Notebook(self.root)   
+                   
+        self.canvas = Canvas(self.root, width = 480, height = 480)
+        self.canvas.pack(expand=True)
+        self.frame_rgb_canvas = np.zeros([480, 640, 3]).astype(np.uint8)
+        self.update_canvas()
         
         self.TAB1 = Frame(self.notebook, bg="#00766c")
         self.notebook.add(self.TAB1, text='Record')
@@ -23,18 +37,16 @@ class DemoGUI:
         self.TAB2 = Frame(self.notebook, bg="#00766c")
         self.notebook.add(self.TAB2, text='Play mode')
         self.notebook.pack(expand=2, fill="both")
-        
-        
-        
+                       
         self.is_play_mode = 0
         self.is_recording = False
-    
-
+        
+        
         # ─── RECORD MODE ─────────────────────────────────────────────────
              
         # record button.     
         self.record_button_text = StringVar(self.TAB1, name="record_button_text")
-        self.record_button_text.set("Record (R)")
+        self.record_button_text.set("Record")
         self.is_recording = False
         record_button = Button(self.TAB1, textvariable=self.record_button_text,
                                command=self.toggle_record_button,
@@ -62,7 +74,7 @@ class DemoGUI:
         
         # record button.     
         self.record_button_text = StringVar(self.TAB2, name="record_button_text")
-        self.record_button_text.set("Record (R)")
+        self.record_button_text.set("Record")
         self.is_recording = False
         record_button_p = Button(self.TAB2, textvariable=self.record_button_text,
                                command=self.toggle_record_button,
@@ -73,7 +85,7 @@ class DemoGUI:
 
         
         # Show console.
-        self.console_box = Text(self.TAB2, bg = "#44a18e")
+        self.console_box = Text(self.TAB2, bg ="#44a18e")
         self.console_box.grid(columnspan=2, sticky=W)
 
         
@@ -83,13 +95,13 @@ class DemoGUI:
         self.is_recording = not self.is_recording
         tab_id = self.notebook.index(self.notebook.select())
         if self.is_recording:
-            self.record_button_text.set("Stop (R)")                       
+            self.record_button_text.set("Stop")                       
             self.notebook.tab(not tab_id, state="disabled")
             self.name_box["state"] = DISABLED
             self.save_button["state"] = DISABLED
 
         else:
-            self.record_button_text.set("Record (R)")
+            self.record_button_text.set("Record")
             self.notebook.tab(not tab_id, state="normal")
             self.name_box["state"] = NORMAL
             self.save_button["state"] = NORMAL           
@@ -121,6 +133,6 @@ class DemoGUI:
         
         
         
-if __name__ == "__main__":
+if __name__ =="__main__":
     config_dialog = DemoGUI()       
     config_dialog.root.mainloop()

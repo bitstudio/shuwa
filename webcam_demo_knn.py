@@ -53,13 +53,9 @@ class Application(DemoGUI, Pipeline):
         
 
     def show_frame(self, frame_rgb):
-        cv2.imshow("posenet", cv2.cvtColor(frame_rgb, cv2.COLOR_RGB2BGR))
-        key = cv2.waitKey(1)
-
-        if key == ord("q"):
-            self.close_all()
-        if key == ord("r"):
-            self.toggle_record_button()     
+        self.frame_rgb_canvas = frame_rgb
+        self.update_canvas()
+    
 
           
     def change_mode_on_tab(self, event):         
