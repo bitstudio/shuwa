@@ -19,9 +19,7 @@ $(document).ready(() => {
     const processingText = document.querySelector(".processing-text");
     const recordIdle = document.querySelector(".record-idle");
     const recordResult = document.querySelector(".record-result");
-    const correctionModal = document.querySelector(".correction-modal-wrapper");
     const backgrounddiv = document.querySelector(".background");
-    const correctionVideo = document.querySelector("#correction-modal-video");
     switch (input) {
       case "idle":
         recordIdle.style.opacity = "1";
@@ -44,24 +42,16 @@ $(document).ready(() => {
         console.log("processing model");
         break;
       case "upload":
-        correctionModal.style.transform = "translate(-50%, 150%)";
         backgrounddiv.style.backgroundColor = "unset";
         backgrounddiv.style.zIndex = -1;
-        setTimeout(() => {
-          correctionVideo.src = "";
-        }, 600);
 
         processingModal.style.display = "flex";
         processingText.innerHTML = "upload data to cloud";
         console.log("uploading data model");
         break;
       case "result":
-        correctionModal.style.transform = "translate(-50%, 150%)";
         backgrounddiv.style.backgroundColor = "unset";
         backgrounddiv.style.zIndex = -1;
-        setTimeout(() => {
-          correctionVideo.src = "";
-        }, 600);
 
         recordIdle.style.opacity = "0";
         recordIdle.style.zIndex = "1";
@@ -72,7 +62,6 @@ $(document).ready(() => {
         console.log("result");
         break;
       case "result_no":
-        correctionModal.style.transform = "translate(-50%, -50%)";
         backgrounddiv.style.backgroundColor = "rgb(80,80,80,0.7)";
         backgrounddiv.style.zIndex = 50;
       default:
@@ -344,28 +333,6 @@ $(document).ready(() => {
     hksl_table.style.display = "none";
 
     document.getElementsByClassName("language-btn").forEach((item) => {
-      item.classList.remove("active");
-    });
-    e.target.classList.add("active");
-  });
-  $("#correction-modal-language-hksl-btn").on("click", (e) => {
-    const correction_jsl_table = document.querySelector(".jsl-correction-sign-table");
-    const correction_hksl_table = document.querySelector(".hksl-correction-sign-table");
-    correction_jsl_table.style.display = "none";
-    correction_hksl_table.style.display = "unset";
-
-    document.getElementsByClassName("correction-language-btn").forEach((item) => {
-      item.classList.remove("active");
-    });
-    e.target.classList.add("active");
-  });
-  $("#correction-modal-language-jsl-btn").on("click", (e) => {
-    const correction_jsl_table = document.querySelector(".jsl-correction-sign-table");
-    const correction_hksl_table = document.querySelector(".hksl-correction-sign-table");
-    correction_jsl_table.style.display = "unset";
-    correction_hksl_table.style.display = "none";
-
-    document.getElementsByClassName("correction-language-btn").forEach((item) => {
       item.classList.remove("active");
     });
     e.target.classList.add("active");
