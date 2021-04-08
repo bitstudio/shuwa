@@ -49,8 +49,7 @@ class DemoGUI:
         self.record_button_text.set("Record")
         self.is_recording = False
         record_button = Button(self.TAB1, textvariable=self.record_button_text,
-                               command=self.toggle_record_button,
-                               bg="#f6695b", fg="#e5edb6").grid(columnspan=2, sticky=W)
+                               command=self.toggle_record_button).grid(columnspan=2, sticky=W)
         
         
         # name box.
@@ -77,8 +76,7 @@ class DemoGUI:
         self.record_button_text.set("Record")
         self.is_recording = False
         record_button_p = Button(self.TAB2, textvariable=self.record_button_text,
-                               command=self.toggle_record_button,
-                               bg="#f6695b", fg="#e5edb6").grid(columnspan=2, sticky=W)
+                               command=self.toggle_record_button).grid(columnspan=2, sticky=W)
 
 
         
