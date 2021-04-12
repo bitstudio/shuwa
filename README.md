@@ -1,8 +1,12 @@
-# Shuwa
+# Shuwa Gesture Toolkit
 
-## [[Blog post]()] [[Web demo](https://bitstudio.github.io/shuwa/web_demo/public)]
+Shuwa (手話) is Japanese for "Sign Language"
 
-Shuwa ML is a Deep Learning model pipeline that classify sign language from input video, Implemented in tensorflow2.
+Shuwa Gesture Toolkit is a framework that detects and classifies arbitrary gestures in short videos. It is particularly useful for recognizing basic words in sign language. We collected thousands of example videos of people signing Japanese Sign Language (JSL) and Hong Kong Sign Language (HKSL) to train the baseline model for recognizing gestures and facial expressions.
+
+The Shuwa Gesture Toolkit also allows you to train new gestures, so it can be trained to recognize any sign frm any sign language in the world.
+
+[[Web Demo](https://bitstudio.github.io/shuwa/web_demo/public)]
 
 # How it works
 
@@ -22,13 +26,12 @@ All related models listed below.
 - For MacOS user  
   Install python 3.7 from [`official python.org`](https://www.python.org/downloads/release/python-379/) for tkinter support.
 
-
 - Install dependencies
   ```
-  pip3 install -r requirement.txt 
+  pip3 install -r requirements.txt 
   ```
 
-# Run Python webcam demo
+# Run Python Demo
 
 ```
 python3 webcam_demo_knn.py
@@ -62,11 +65,11 @@ python3 posenet\webcam_demo_pose.py
 python3 hand_landmark\webcam_demo_hand.py
 ```
 
-# Deploy in webapp
+# Deploy on the Web using Tensorflow.js
 
-Instruction can be found [`here`](/web_demo)
+Instructions [`here`](/web_demo)
 
 # Train classifier from scratch
 
-Usually you can add a custom sign by using Record mode in the full demo program.  
-But in case you want to train the classifier from scratch you can check out the process [`here`](/classifier)
+You can add a custom sign by using Record mode in the full demo program.  
+But if you want to train the classifier from scratch you can check out the process [`here`](/classifier)
