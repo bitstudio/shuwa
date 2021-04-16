@@ -87,65 +87,67 @@
     <div class="main-page">
       <div class="main-page-sidebar main-page-left"></div>
       <div class="main-page-container">
-        <div class="demo-section">
-          <div class="demo-section-sign-wrapper">
-            <div class="demo-section-sign-wrapper-language-btn-wrapper">
-              <!-- hksl button and jsl button -->
-              <button class="language-btn active" id="language-hksl-btn">
-                HKSL
-              </button>
-              <button class="language-btn" id="language-jsl-btn">JSL</button>
-            </div>
-            <div class="demo-section-sign-wrapper-sign-table-wrapper">
-              <!-- hksl list && jsl list || class sign-selection-table -->
+        <div class="main-section">
+          <div class="demo-section">
+            <div class="demo-section-sign-wrapper">
+              <div class="demo-section-sign-wrapper-language-btn-wrapper">
+                <!-- hksl button and jsl button -->
+                <button class="language-btn active" id="language-hksl-btn">
+                  HKSL
+                </button>
+                <button class="language-btn" id="language-jsl-btn">JSL</button>
+              </div>
+              <div class="demo-section-sign-wrapper-sign-table-wrapper">
+                <!-- hksl list && jsl list || class sign-selection-table -->
+              </div>
             </div>
           </div>
-        </div>
-        <div class="record-section">
-          <!--
+          <div class="record-section">
+            <!--
               state
               - idle
               - processing
               - result
               -->
-          <div class="demo-section-video-wrapper">
-            <video
-              id="demo-video"
-              class="demo-video"
-              autoplay
-              loop
-              muted
-              playsinline
-            ></video>
-          </div>
-          <div class="record-idle">
-            <div class="record-camera-wrapper">
-              <div class="video-wrapper">
-                <img
-                  src="./assets/guide_human.png"
-                  alt=""
-                  class="human-guide"
-                />
-                <p id="countdown-text"></p>
-                <video
-                  class="video-camera"
-                  autoplay
-                  playsinline
-                  id="video-camera-id"
-                ></video>
-              </div>
-              <canvas
-                class="canvas-capture"
-                width="257"
-                height="257"
-                id="canvas-capture-id"
-              ></canvas>
+            <div class="demo-section-video-wrapper">
+              <video
+                id="demo-video"
+                class="demo-video"
+                autoplay
+                loop
+                muted
+                playsinline
+              ></video>
             </div>
-            <div class="record-btn-wrapper">
-              <div class="record-btn-border">
-                <button class="record-btn" id="record-btn-id">
-                  <p class="record-countdown-text"></p>
-                </button>
+            <div class="record-idle">
+              <div class="record-camera-wrapper">
+                <div class="video-wrapper">
+                  <img
+                    src="./assets/guide_human.png"
+                    alt=""
+                    class="human-guide"
+                  />
+                  <p id="countdown-text"></p>
+                  <video
+                    class="video-camera"
+                    autoplay
+                    playsinline
+                    id="video-camera-id"
+                  ></video>
+                </div>
+                <canvas
+                  class="canvas-capture"
+                  width="257"
+                  height="257"
+                  id="canvas-capture-id"
+                ></canvas>
+              </div>
+              <div class="record-btn-wrapper">
+                <div class="record-btn-border">
+                  <button class="record-btn" id="record-btn-id">
+                    <p class="record-countdown-text"></p>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

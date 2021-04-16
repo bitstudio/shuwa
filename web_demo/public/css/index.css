@@ -47,14 +47,19 @@ body {
   width: 10%;
 }
 .main-page-container {
-  display: flex;
-  flex-flow: row nowrap;
   height: 60%;
 
   flex: 1;
 
   border: 3px solid white;
   border-radius: 20px;
+}
+.main-section {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-flow: row nowrap;
 }
 .main-page-right {
   width: 20%;

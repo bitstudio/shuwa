@@ -8,16 +8,18 @@
 }
 .demo-section-video-wrapper {
   position: relative;
-  width: 60%;
-  height: 40%;
-  margin-bottom: 3%;
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .demo-video {
-  height: 100%;
-  width: 80%;
+  height: 300px;
+  width: 300px;
   border-radius: 2rem;
   background-color: black;
-  border: 0.2rem solid black;
 }
 .demo-section-sign-wrapper {
   width: 100%;
