@@ -27,6 +27,20 @@
   left: 50%;
   transform: translate(-50%, 0%);
 } */
+.record-camera-wrapper {
+  position: relative;
+}
+.video-caption {
+  position: absolute;
+  left: 50%;
+  top: -40px;
+  transform: translate(-50%, -100%);
+
+  font-size: 16px;
+  font-weight: 400;
+  color: #585858;
+  white-space: nowrap;
+}
 .video-wrapper {
   /* position: absolute; */
   width: 300px;

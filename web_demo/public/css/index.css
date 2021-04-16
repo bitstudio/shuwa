@@ -47,7 +47,7 @@ body {
   width: 10%;
 }
 .main-page-container {
-  height: 60%;
+  height: 65%;
   width: 70%;
 
   border: 3px solid white;
@@ -63,7 +63,7 @@ body {
   transition: all 2s;
 }
 .main-page-right {
-  width: 20%;
+  width: 15%;
   display: flex;
   flex-flow: column;
   justify-content: center;

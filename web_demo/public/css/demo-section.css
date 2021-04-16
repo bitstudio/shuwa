@@ -15,6 +15,9 @@
   justify-content: center;
   align-items: center;
 }
+.demo-video-wrapper {
+  position: relative;
+}
 .demo-video {
   height: 300px;
   width: 300px;
