@@ -75,6 +75,8 @@ body {
 }
 .social-btn {
   margin: 15px;
+  text-decoration: none;
+  color: black;
 }
 .social-btn-icon {
   width: 40px;
