@@ -1,4 +1,11 @@
 "use strict";
+
+const formatSign = (sign) => {
+  const splited = sign.split("_");
+  splited.shift();
+  return splited.join(" ");
+};
+
 export const initVideoSeleciton = async () => {
   /**
    * table
@@ -39,7 +46,7 @@ export const initVideoSeleciton = async () => {
     const jsl_button = document.createElement("button");
     jsl_button.classList.add("jsl-sign-button");
     jsl_button.setAttribute("id", jsl_sign);
-    jsl_button.innerHTML = jsl_sign;
+    jsl_button.innerHTML = formatSign(jsl_sign);
 
     jsl_button.addEventListener("click", () => {
       console.log("click: ", jsl_sign);
@@ -57,7 +64,7 @@ export const initVideoSeleciton = async () => {
     const hksl_button = document.createElement("button");
     hksl_button.classList.add("hksl-sign-button");
     hksl_button.setAttribute("id", hksl_sign);
-    hksl_button.innerHTML = hksl_sign;
+    hksl_button.innerHTML = formatSign(hksl_sign);
 
     hksl_button.addEventListener("click", () => {
       console.log("click: ", hksl_sign);
