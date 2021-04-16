@@ -76,13 +76,15 @@ $(document).ready(() => {
     const recordBtn = document.getElementById("record-btn-id");
     switch (input) {
       case "idle":
-        recordBtn.style.width = "3rem";
-        recordBtn.style.height = "3rem";
+        recordBtn.style.width = "90px";
+        recordBtn.style.height = "90px";
+        recordBtn.innerHTML = "Ready";
         recordBtn.style.borderRadius = "50%";
         break;
       case "record":
-        recordBtn.style.width = "1.6rem";
-        recordBtn.style.height = "1.6rem";
+        recordBtn.style.width = "45px";
+        recordBtn.style.height = "45px";
+        recordBtn.innerHTML = "";
         recordBtn.style.borderRadius = "0%";
         break;
     }

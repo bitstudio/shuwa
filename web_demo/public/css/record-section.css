@@ -76,11 +76,8 @@
   justify-content: center;
 }
 .record-btn-border {
-  width: 3.4rem;
-  height: 3.4rem;
-  border-radius: 50%;
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
-  border: 0.3rem solid red;
+  /* -webkit-mask-image: -webkit-radial-gradient(white, black);
+  border: 0.3rem solid red; */
 
   position: relative;
 }
@@ -90,13 +87,21 @@
   top: 50%;
   transform: translate(-50%, -50%);
 
-  width: 3rem;
-  height: 3rem;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   border: none;
-  background-color: red;
+  background-color: #ff4471;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   cursor: pointer;
   color: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 14px;
+  text-align: center;
 
   transition: all 0.2s;
 }
