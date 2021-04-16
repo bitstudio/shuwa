@@ -48,18 +48,19 @@ body {
 }
 .main-page-container {
   height: 60%;
-
-  flex: 1;
+  width: 70%;
 
   border: 3px solid white;
   border-radius: 20px;
 }
 .main-section {
-  width: 100%;
+  width: 200%;
   height: 100%;
 
   display: flex;
   flex-flow: row nowrap;
+
+  transition: all 2s;
 }
 .main-page-right {
   width: 20%;

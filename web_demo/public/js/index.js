@@ -20,13 +20,15 @@ $(document).ready(() => {
     const recordIdle = document.querySelector(".record-idle");
     const recordResult = document.querySelector(".record-result");
     const backgrounddiv = document.querySelector(".background");
+    const mainSection = document.querySelector(".main-section");
     switch (input) {
       case "idle":
-        recordIdle.style.opacity = "1";
-        recordIdle.style.zIndex = "2";
+        // recordIdle.style.opacity = "1";
+        // recordIdle.style.zIndex = "2";
 
-        recordResult.style.opacity = "0";
-        recordResult.style.zIndex = "1";
+        mainSection.style.transform = "translateX(0%)";
+        // recordResult.style.opacity = "0";
+        // recordResult.style.zIndex = "1";
 
         processingModal.style.display = "none";
         console.log("idle");
@@ -53,11 +55,12 @@ $(document).ready(() => {
         // backgrounddiv.style.backgroundColor = "unset";
         backgrounddiv.style.zIndex = -1;
 
-        recordIdle.style.opacity = "0";
-        recordIdle.style.zIndex = "1";
+        // recordIdle.style.opacity = "0";
+        // recordIdle.style.zIndex = "1";
 
-        recordResult.style.opacity = "1";
-        recordResult.style.zIndex = "2";
+        mainSection.style.transform = "translateX(-50%)";
+        // recordResult.style.opacity = "1";
+        // recordResult.style.zIndex = "2";
         processingModal.style.display = "none";
         console.log("result");
         break;

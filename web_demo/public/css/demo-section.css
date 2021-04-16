@@ -1,5 +1,5 @@
 .demo-section {
-  width: 20%;
+  width: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,6 +20,7 @@
   width: 300px;
   border-radius: 2rem;
   background-color: black;
+  object-fit: cover;
 }
 .demo-section-sign-wrapper {
   width: 100%;
