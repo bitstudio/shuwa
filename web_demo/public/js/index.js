@@ -42,7 +42,7 @@ $(document).ready(() => {
         console.log("processing model");
         break;
       case "upload":
-        backgrounddiv.style.backgroundColor = "unset";
+        // backgrounddiv.style.backgroundColor = "unset";
         backgrounddiv.style.zIndex = -1;
 
         processingModal.style.display = "flex";
@@ -50,7 +50,7 @@ $(document).ready(() => {
         console.log("uploading data model");
         break;
       case "result":
-        backgrounddiv.style.backgroundColor = "unset";
+        // backgrounddiv.style.backgroundColor = "unset";
         backgrounddiv.style.zIndex = -1;
 
         recordIdle.style.opacity = "0";
@@ -115,7 +115,9 @@ $(document).ready(() => {
   let showResultCanvas = 0;
   const sliderFrame = document.getElementById("frame-canvas-slider");
   const selectFrameResult = (index) => {
-    const previousCanvas = document.getElementById(`image-frame-${showResultCanvas}`);
+    const previousCanvas = document.getElementById(
+      `image-frame-${showResultCanvas}`
+    );
     if (previousCanvas) previousCanvas.style.display = "none";
     const selectedCanvas = document.getElementById(`image-frame-${index}`);
     if (selectedCanvas) selectedCanvas.style.display = "flex";
@@ -153,7 +155,9 @@ $(document).ready(() => {
     const predictionImage = async () => {
       for (const image_index in PREDICTION_IMAGE_STACK) {
         console.log(image_index);
-        const result = await classifyModel.predictImage(PREDICTION_IMAGE_STACK[image_index].imageData);
+        const result = await classifyModel.predictImage(
+          PREDICTION_IMAGE_STACK[image_index].imageData
+        );
         console.log(result);
         const isPose = !checkArrayMatch(result.pose, [0, 0]);
         const isFace = !checkArrayMatch(result.face, [0, 0]);
@@ -188,7 +192,9 @@ $(document).ready(() => {
       console.log(sortedArray);
 
       // get all stack keypoints and image stack send to draw key points
-      const canvasWrapperEl = document.getElementById("frame-canvas-wrapper-id");
+      const canvasWrapperEl = document.getElementById(
+        "frame-canvas-wrapper-id"
+      );
       for (const i in PREDICTION_IMAGE_STACK) {
         const canvasEl = drawResult({
           imageData: PREDICTION_IMAGE_STACK[i].imageData,
@@ -230,10 +236,14 @@ $(document).ready(() => {
           isFaceNode.style.backgroundColor = item.face ? "#7ecbbd" : "#de5246";
           const isLeftHandNode = document.createElement("td");
           isLeftHandNode.innerHTML = item.leftHand ? "yes" : "no";
-          isLeftHandNode.style.backgroundColor = item.leftHand ? "#7ecbbd" : "#de5246";
+          isLeftHandNode.style.backgroundColor = item.leftHand
+            ? "#7ecbbd"
+            : "#de5246";
           const isRightHandNode = document.createElement("td");
           isRightHandNode.innerHTML = item.rightHand ? "yes" : "no";
-          isRightHandNode.style.backgroundColor = item.rightHand ? "#7ecbbd" : "#de5246";
+          isRightHandNode.style.backgroundColor = item.rightHand
+            ? "#7ecbbd"
+            : "#de5246";
 
           thisTable.appendChild(frameNode);
           thisTable.appendChild(isPoseNode);
@@ -319,7 +329,7 @@ $(document).ready(() => {
     const jsl_table = document.querySelector(".jsl-sign-table");
     const hksl_table = document.querySelector(".hksl-sign-table");
     jsl_table.style.display = "none";
-    hksl_table.style.display = "unset";
+    hksl_table.style.display = "block";
 
     document.getElementsByClassName("language-btn").forEach((item) => {
       item.classList.remove("active");
@@ -329,7 +339,7 @@ $(document).ready(() => {
   $("#language-jsl-btn").on("click", (e) => {
     const jsl_table = document.querySelector(".jsl-sign-table");
     const hksl_table = document.querySelector(".hksl-sign-table");
-    jsl_table.style.display = "unset";
+    jsl_table.style.display = "block";
     hksl_table.style.display = "none";
 
     document.getElementsByClassName("language-btn").forEach((item) => {

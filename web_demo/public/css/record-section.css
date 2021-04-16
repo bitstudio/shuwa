@@ -1,6 +1,8 @@
 .record-section {
-  width: 60%;
+  width: 80%;
   position: relative;
+  background: #efefef;
+  border-radius: 20px;
 }
 .record-idle {
   width: 90%;
