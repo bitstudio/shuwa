@@ -276,7 +276,7 @@ $(document).ready(() => {
         const resultNode = document.createElement("td");
         resultNode.innerHTML = sortedArray[i][0];
         const accNode = document.createElement("td");
-        accNode.innerHTML = sortedArray[i][1];
+        accNode.innerHTML = sortedArray[i][1].toFixed(2);
         thisTable.appendChild(rankNode);
         thisTable.appendChild(resultNode);
         thisTable.appendChild(accNode);
