@@ -96,7 +96,7 @@ $(document).ready(() => {
   const classifyModel = new SignLanguageClassifyModel();
 
   const initmodel = async () => {
-    await classifyModel.initModel();
+    // await classifyModel.initModel();
     page_changeState("idle");
     console.log("init model finish");
   };
