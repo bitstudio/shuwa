@@ -20,6 +20,11 @@
   width: 60%;
 }
 
+.frame-canvas-wrapper {
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
 .result-prediction-wrapper {
   width: 50%;
   box-sizing: border-box;
