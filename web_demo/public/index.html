@@ -85,121 +85,143 @@
       <!-- case of wanna improve model && got wrong result -->
     </div>
     <div class="main-page">
-      <div class="demo-section">
-        <div class="demo-section-sign-wrapper">
-          <div class="demo-section-sign-wrapper-language-btn-wrapper">
-            <!-- hksl button and jsl button -->
-            <button class="language-btn active" id="language-hksl-btn">
-              HKSL
-            </button>
-            <button class="language-btn" id="language-jsl-btn">JSL</button>
-          </div>
-          <div class="demo-section-sign-wrapper-sign-table-wrapper">
-            <!-- hksl list && jsl list || class sign-selection-table -->
-          </div>
-        </div>
-      </div>
-      <div class="record-section">
-        <!--
-            state
-            - idle
-            - processing
-            - result
-            -->
-        <div class="demo-section-video-wrapper">
-          <video
-            id="demo-video"
-            class="demo-video"
-            autoplay
-            loop
-            muted
-            playsinline
-          ></video>
-        </div>
-        <div class="record-idle">
-          <div class="record-camera-wrapper">
-            <div class="video-wrapper">
-              <img src="./assets/guide_human.png" alt="" class="human-guide" />
-              <p id="countdown-text"></p>
-              <video
-                class="video-camera"
-                autoplay
-                playsinline
-                id="video-camera-id"
-              ></video>
-            </div>
-            <canvas
-              class="canvas-capture"
-              width="257"
-              height="257"
-              id="canvas-capture-id"
-            ></canvas>
-          </div>
-          <div class="record-btn-wrapper">
-            <div class="record-btn-border">
-              <button class="record-btn" id="record-btn-id">
-                <p class="record-countdown-text"></p>
+      <div class="main-page-sidebar main-page-left"></div>
+      <div class="main-page-container">
+        <div class="demo-section">
+          <div class="demo-section-sign-wrapper">
+            <div class="demo-section-sign-wrapper-language-btn-wrapper">
+              <!-- hksl button and jsl button -->
+              <button class="language-btn active" id="language-hksl-btn">
+                HKSL
               </button>
+              <button class="language-btn" id="language-jsl-btn">JSL</button>
+            </div>
+            <div class="demo-section-sign-wrapper-sign-table-wrapper">
+              <!-- hksl list && jsl list || class sign-selection-table -->
             </div>
           </div>
         </div>
-        <div class="record-result">
-          <div class="frame-analyst-wrapper">
-            <div class="frame-analyst-table">
-              <table style="border-collapse: collapse; width: 100%">
-                <thead>
-                  <tr>
-                    <th>Frame</th>
-                    <th>Pose</th>
-                    <th>Face</th>
-                    <th>Left Hand</th>
-                    <th>Right Hand</th>
-                  </tr>
-                </thead>
-                <tbody id="frame-table-body-id"></tbody>
-              </table>
-            </div>
-            <div class="frame-analyst-canvas-wrapper">
-              <div
-                class="frame-canvas-wrapper"
-                id="frame-canvas-wrapper-id"
-              ></div>
-              <p class="frame-canvas-text" id="frame-canvas-text-id">
-                frame: 1
-              </p>
-              <input
-                type="range"
-                min="0"
-                max="15"
-                step="1"
-                value="0"
-                id="frame-canvas-slider"
-              />
-            </div>
+        <div class="record-section">
+          <!--
+              state
+              - idle
+              - processing
+              - result
+              -->
+          <div class="demo-section-video-wrapper">
+            <video
+              id="demo-video"
+              class="demo-video"
+              autoplay
+              loop
+              muted
+              playsinline
+            ></video>
           </div>
-          <div class="result-prediction-wrapper">
-            <div class="result-prediction-table">
-              <table style="border-collapse: collapse; width: 100%">
-                <thead>
-                  <tr>
-                    <th>Rank</th>
-                    <th>Sign result</th>
-                    <th>Accuracy (%)</th>
-                  </tr>
-                </thead>
-                <tbody id="table-body"></tbody>
-              </table>
+          <div class="record-idle">
+            <div class="record-camera-wrapper">
+              <div class="video-wrapper">
+                <img
+                  src="./assets/guide_human.png"
+                  alt=""
+                  class="human-guide"
+                />
+                <p id="countdown-text"></p>
+                <video
+                  class="video-camera"
+                  autoplay
+                  playsinline
+                  id="video-camera-id"
+                ></video>
+              </div>
+              <canvas
+                class="canvas-capture"
+                width="257"
+                height="257"
+                id="canvas-capture-id"
+              ></canvas>
             </div>
-          </div>
-          <div class="rolling-btn-wrapper">
-            <div class="not-improve-wrapper">
-              <p class="title-btn">Try another sign</p>
-              <div class="action-btn-wrapper">
-                <button class="primary-btn" id="try-again-btn">
-                  try again
+            <div class="record-btn-wrapper">
+              <div class="record-btn-border">
+                <button class="record-btn" id="record-btn-id">
+                  <p class="record-countdown-text"></p>
                 </button>
               </div>
             </div>
+          </div>
+          <div class="record-result">
+            <div class="frame-analyst-wrapper">
+              <div class="frame-analyst-table">
+                <table style="border-collapse: collapse; width: 100%">
+                  <thead>
+                    <tr>
+                      <th>Frame</th>
+                      <th>Pose</th>
+                      <th>Face</th>
+                      <th>Left Hand</th>
+                      <th>Right Hand</th>
+                    </tr>
+                  </thead>
+                  <tbody id="frame-table-body-id"></tbody>
+                </table>
+              </div>
+              <div class="frame-analyst-canvas-wrapper">
+                <div
+                  class="frame-canvas-wrapper"
+                  id="frame-canvas-wrapper-id"
+                ></div>
+                <p class="frame-canvas-text" id="frame-canvas-text-id">
+                  frame: 1
+                </p>
+                <input
+                  type="range"
+                  min="0"
+                  max="15"
+                  step="1"
+                  value="0"
+                  id="frame-canvas-slider"
+                />
+              </div>
+            </div>
+            <div class="result-prediction-wrapper">
+              <div class="result-prediction-table">
+                <table style="border-collapse: collapse; width: 100%">
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>Sign result</th>
+                      <th>Accuracy (%)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-body"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="rolling-btn-wrapper">
+              <div class="not-improve-wrapper">
+                <p class="title-btn">Try another sign</p>
+                <div class="action-btn-wrapper">
+                  <button class="primary-btn" id="try-again-btn">
+                    try again
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-page-sidebar main-page-right">
+        <div class="social-btn">
+          <img class="social-btn-icon" src="/assets/icons/help-icon.svg" />
+          <p class="social-btn-text">Help</p>
+        </div>
+        <div class="social-btn">
+          <img class="social-btn-icon" src="/assets/icons/github-icon.svg" />
+          <p class="social-btn-text">Github</p>
+        </div>
+        <div class="social-btn">
+          <img class="social-btn-icon" src="/assets/icons/signtown-icon.svg" />
+          <p class="social-btn-text">SignTown</p>
         </div>
       </div>
     </div>
