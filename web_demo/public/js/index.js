@@ -22,11 +22,15 @@ $(document).ready(() => {
     const backgrounddiv = document.querySelector(".background");
     const mainSection = document.querySelector(".main-section");
     switch (input) {
+      case "intro":
+        mainSection.style.transform = "translateX(0)";
+        processingModal.style.display = "none";
+        break;
       case "idle":
         // recordIdle.style.opacity = "1";
         // recordIdle.style.zIndex = "2";
 
-        mainSection.style.transform = "translateX(0%)";
+        mainSection.style.transform = "translateX(calc(-1/3 * 100% - 3px))";
         // recordResult.style.opacity = "0";
         // recordResult.style.zIndex = "1";
 
@@ -58,7 +62,7 @@ $(document).ready(() => {
         // recordIdle.style.opacity = "0";
         // recordIdle.style.zIndex = "1";
 
-        mainSection.style.transform = "translateX(-50%)";
+        mainSection.style.transform = "translateX(calc(-2/3 * 100% - 3px))";
         // recordResult.style.opacity = "1";
         // recordResult.style.zIndex = "2";
         processingModal.style.display = "none";
@@ -96,8 +100,8 @@ $(document).ready(() => {
   const classifyModel = new SignLanguageClassifyModel();
 
   const initmodel = async () => {
-    // await classifyModel.initModel();
-    page_changeState("idle");
+    await classifyModel.initModel();
+    page_changeState("intro");
     console.log("init model finish");
   };
   page_changeState("loadingmodel");
@@ -308,6 +312,10 @@ $(document).ready(() => {
     };
     requestAnimationFrame(captureFrame);
   };
+
+  $("#intro-next-btn").on("click", () => {
+    page_changeState("idle");
+  });
 
   $("#record-btn-id").on("click", () => {
     // count down 3 sec

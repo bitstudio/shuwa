@@ -52,15 +52,20 @@ body {
 
   border: 3px solid white;
   border-radius: 20px;
+  pointer-events: none;
+}
+.main-page-container * {
+  pointer-events: all;
 }
 .main-section {
-  width: 300%;
+  width: calc(300% + 6px);
   height: 100%;
 
   display: flex;
   flex-flow: row nowrap;
 
   transition: all 2s;
+  z-index: -1;
 }
 .main-page-right {
   width: 15%;
