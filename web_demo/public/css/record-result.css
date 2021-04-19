@@ -152,8 +152,8 @@
   position: relative;
   z-index: 2; /* ensure any child elements sit above pseudos */
 }
-.frame-visible-part svg path {
-  fill: black;
+.frame-visible-part.active svg path {
+  fill: blue;
 }
 .frame-canvas-slider {
   -webkit-appearance: none;

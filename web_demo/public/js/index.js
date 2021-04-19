@@ -135,8 +135,24 @@ $(document).ready(() => {
     sliderFrame.value = index;
     showResultCanvas = index;
   };
+  const updateVisiblePart = (index) => {
+    const visiblePart = FRAME_KEYPOINTS_TABLE[+index];
+
+    const poseEl = document.getElementById("visible-part-pose"),
+      leftHandEl = document.getElementById("visible-part-left-hand"),
+      rightHandEl = document.getElementById("visible-part-right-hand"),
+      faceEl = document.getElementById("visible-part-face");
+
+    const addOrRemove = (visible) => (visible ? "add" : "remove");
+
+    poseEl.classList[addOrRemove(visiblePart.pose)]("active");
+    leftHandEl.classList[addOrRemove(visiblePart.leftHand)]("active");
+    rightHandEl.classList[addOrRemove(visiblePart.rightHand)]("active");
+    faceEl.classList[addOrRemove(visiblePart.face)]("active");
+  };
   sliderFrame.oninput = function () {
     selectFrameResult(this.value);
+    updateVisiblePart(this.value);
   };
 
   const IMAGE_STACK = [];
@@ -184,7 +200,11 @@ $(document).ready(() => {
         RESULT_LEFTHAND_STACK.push(result.leftHand);
         RESULT_RIGHTHAND_STACK.push(result.rightHand);
       }
+
       console.log("finished predict image: pose, face, hand");
+
+      console.log("update visible part after finish prediction");
+      updateVisiblePart(sliderFrame.value);
       const resultStack = {
         poseStack: RESULT_POSE_STACK,
         faceStack: RESULT_FACE_STACK,
