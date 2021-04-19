@@ -112,14 +112,16 @@
 }
 .frame-visible-parts {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
 .frame-visible-part {
   border: 1px solid black;
-  width: 27px;
-  height: 30px;
+  width: 36px;
+  height: 40px;
   background: #efefef;
+  box-sizing: border-box;
+  padding: 5px;
 
   display: flex;
   justify-content: center;
@@ -135,24 +137,23 @@
   z-index: 1;
 }
 .frame-visible-part::before {
-  width: 20px;
-  left: calc(50% - 10px);
+  width: 24px;
+  left: calc(50% - 12px);
   height: calc(100% + 4px);
   top: -2px;
 }
 .frame-visible-part::after {
-  height: 20px;
+  height: 24px;
   left: -2px;
   width: calc(100% + 4px);
-  top: calc(50% - 10px);
+  top: calc(50% - 12px);
 }
 .frame-visible-part > * {
   position: relative;
   z-index: 2; /* ensure any child elements sit above pseudos */
 }
 .frame-visible-part svg path {
-  stroke: black;
-  fill: transparent;
+  fill: black;
 }
 .frame-canvas-slider {
   -webkit-appearance: none;
