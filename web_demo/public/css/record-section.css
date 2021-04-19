@@ -71,7 +71,7 @@
   height: 300px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scaleX(-1);
   background-color: black;
   border-radius: 2rem;
   object-fit: cover;
