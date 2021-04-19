@@ -104,6 +104,56 @@
   cursor: pointer;
 }
 
+.frame-analyst-canvas-wrapper {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+}
+.frame-visible-parts {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.frame-visible-part {
+  border: 1px solid black;
+  width: 27px;
+  height: 30px;
+  background: #efefef;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+.frame-visible-part::before,
+.frame-visible-part::after {
+  position: absolute;
+  background: inherit;
+  content: "";
+  z-index: 1;
+}
+.frame-visible-part::before {
+  width: 20px;
+  left: calc(50% - 10px);
+  height: calc(100% + 4px);
+  top: -2px;
+}
+.frame-visible-part::after {
+  height: 20px;
+  left: -2px;
+  width: calc(100% + 4px);
+  top: calc(50% - 10px);
+}
+.frame-visible-part > * {
+  position: relative;
+  z-index: 2; /* ensure any child elements sit above pseudos */
+}
+.frame-visible-part svg path {
+  stroke: black;
+  fill: transparent;
+}
 .frame-canvas-slider {
   -webkit-appearance: none;
   width: 100%;
