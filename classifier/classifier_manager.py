@@ -25,9 +25,7 @@ class ClassifierManager():
         pose_kp_stack = pose_kp_stack[:, SELECTED_POSENET_JOINTS]
         face_kp_stack = face_kp_stack[:, SELECTED_FACE_JOINTS]
 
-        
-        breakpoint()
-        
+
         # normalize
         nose_location = np.expand_dims(pose_kp_stack[:, POSENET_CENTER_INDEX].copy(), 1) # index=0
         midfin_location_l = np.expand_dims(left_hand_kp_stack[:, HAND_CENTER_INDEX].copy(), 1) # index=9
