@@ -16,10 +16,11 @@ class AnnotationsMaker():
         # this annotation will go to train or val set.    
         train_val = "val" if np.random.random() < SPLIT_TRAIN_VAL else "train"            
         
-        folder_path = os.path.join(root_path, train_val, folder_name)
+        folder_path = os.path.join(root_path, folder_name)
         if not os.path.exists(folder_path):
-            os.makedirs(folder_path)   
-        self.output_path =os.path.join(folder_path, file_name)                         
+            os.makedirs(folder_path)
+    
+        self.output_path = os.path.normpath(os.path.join(folder_path, file_name)                         )
 
         self.posenet_holder = []
         self.face_holder = []
