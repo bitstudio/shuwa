@@ -16,7 +16,7 @@ class AnnotationsMaker():
         # this annotation will go to train or val set.    
         train_val = "val" if np.random.random() < SPLIT_TRAIN_VAL else "train"            
         
-        folder_path = os.path.join(root_path, folder_name)
+        folder_path = os.path.join(root_path, train_val, folder_name)
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
     
