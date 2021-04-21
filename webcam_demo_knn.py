@@ -4,7 +4,7 @@ import time
 import cv2
 from datetime import datetime
 import numpy as np
-from common import crop_square
+from crop_utils import crop_square
 from constants import *
 from gui import DemoGUI
 from pipeline import Pipeline
@@ -18,7 +18,7 @@ class Application(DemoGUI, Pipeline):
     def __init__(self):
         super().__init__()
         
-        self.result_class_name = ""        
+        self.result_class_name = ""     
         self.database = []
         self.labels = []
         self.records = []      
