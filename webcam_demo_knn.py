@@ -115,7 +115,10 @@ class Application(DemoGUI, Pipeline):
 
     def video_loop(self):
 
-        _, frame = cap.read()
+        ret, frame = cap.read()
+        if not ret:
+            print("[ERROR] Camera frame not available.")
+            self.close_all()
         frame = crop_square(frame)
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)        
         t1 = time.time()
