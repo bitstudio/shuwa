@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<!--
+ Copyright 2021 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>shuwa open-source</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.3.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.6.0/dist/tf.min.js"></script>
     <link rel="stylesheet" href="./css/index.css" />
     <link rel="stylesheet" href="./css/loader.css" />
     <link rel="stylesheet" href="./css/correction-modal.css" />
@@ -14,6 +30,7 @@
     <link rel="stylesheet" href="./css/demo-section.css" />
     <link rel="stylesheet" href="./css/record-result.css" />
     <link rel="stylesheet" href="./css/record-section.css" />
+    <link rel="stylesheet" href="./css/help-modal.css" />
   </head>
   <body>
     <!-- 
@@ -35,6 +52,13 @@
      -->
     <!-- correction modal -->
     <div class="background"></div>
+    <div class="mobile-device-modal">
+      <img
+        src="./assets/icons/desktopbrowser.svg"
+        alt="Please use desktop brwoser"
+      />
+      <p>Please use the desktop browser</p>
+    </div>
     <div class="correction-modal-wrapper">
       <h3 class="correction-title">Which is the correct sign</h3>
       <div class="correction-modal-sign-wrapper">
@@ -107,8 +131,14 @@
                   Kong Sign Language.
                 </p>
                 <p class="made-with">
-                  Made in collaboration with <b>Nippon Foundation</b> &
-                  <b>CUHK</b>
+                  Made in collaboration with
+                  <b>
+                    <a href="https://www.nippon-foundation.or.jp/"
+                      >Nippon Foundation</a
+                    ></b
+                  >
+                  &
+                  <b><a href="https://www.cuhk.edu.hk/">CUHK</a></b>
                 </p>
               </div>
               <div class="intro-video-container">
@@ -310,7 +340,7 @@
                   <div id="visible-part-face" class="frame-visible-part">
                     <svg
                       width="100%"
-                      height="100%"
+                      height="85%"
                       viewBox="0 0 14 17"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -392,8 +422,11 @@
         </div>
       </div>
       <div class="main-page-sidebar main-page-right">
-        <div class="social-btn">
-          <img class="social-btn-icon" src="./assets/icons/help-icon.svg" />
+        <div class="social-btn" id="help-btn">
+          <img
+            class="social-btn-icon help"
+            src="./assets/icons/help-icon.svg"
+          />
           <p class="social-btn-text">Help</p>
         </div>
         <a
@@ -401,17 +434,62 @@
           target="_blank"
           class="social-btn"
         >
-          <img class="social-btn-icon" src="./assets/icons/github-icon.svg" />
+          <img
+            class="social-btn-icon github"
+            src="./assets/icons/github-icon.svg"
+          />
           <p class="social-btn-text">Github</p>
         </a>
-        <div class="social-btn">
-          <img class="social-btn-icon" src="./assets/icons/signtown-icon.svg" />
+        <a href="https://sign.town" target="_blank" class="social-btn">
+          <img
+            class="social-btn-icon signtown"
+            src="./assets/icons/signtown-icon.svg"
+          />
           <p class="social-btn-text">SignTown</p>
+        </a>
+      </div>
+      <div class="help-modal-container">
+        <div class="help-modal">
+          <div id="help-modal-close">
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 26 26"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M25.1875 3.25114L22.6507 0.776245L12.5936 10.5881L2.53654 0.776245L-0.000228882 3.25114L10.0569 13.0629L-0.000228882 22.8748L2.53654 25.3496L12.5936 15.5378L22.6507 25.3496L25.1875 22.8748L15.1304 13.0629L25.1875 3.25114Z"
+                fill="black"
+                fill-opacity="0.49"
+              />
+            </svg>
+          </div>
+          <h2>How to Use</h2>
+          <ol>
+            <li>
+              Learn a sign from Japanese Sign Language or Hong Kong Sign
+              Language by picking a video from the menu.
+            </li>
+            <li>Record yourself doing one of the signs.</li>
+            <li>See the ML model guess what you are signing.</li>
+          </ol>
+
+          <h2>Tips</h2>
+
+          <ul>
+            <li>Make sure you are in a well lit area.</li>
+            <li>
+              Make sure your entire upper torso, face, arms, and hands are
+              visible to the camera.
+            </li>
+            <li>Make sure you’re the only one visible on camera.</li>
+          </ul>
         </div>
       </div>
     </div>
 
     <!-- js main -->
-    <script type="module" src="js/index.js"></script>
+    <script type="module" src="./js/index.js"></script>
   </body>
 </html>

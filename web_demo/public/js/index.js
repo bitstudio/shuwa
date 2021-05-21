@@ -1,3 +1,19 @@
+/**
+ * Copyright 2021 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 "use strict";
 
 import { initVideoSeleciton } from "./selection.js";
@@ -5,32 +21,55 @@ import { setupCamera, captureImage } from "./record.js";
 
 import SignLanguageClassifyModel from "./ML/signClassify.js";
 import { drawResult } from "./drawkeypoints.js";
-import { removeChild, checkArrayMatch } from "./utils.js";
+import { removeChild, checkArrayMatch, isMobile } from "./utils.js";
+import initHelpmodal from "./helpmodal.js";
 
 window.recoil = {
   selectSign: "",
   recordClickable: true,
+  isModelReady: false,
+  pageState: "intro",
 };
 
 $(document).ready(() => {
   // page state management
   const page_changeState = (input) => {
+    window.recoil.pageState = input;
     const processingModal = document.querySelector(".processing-modal");
     const processingText = document.querySelector(".processing-text");
-    const recordIdle = document.querySelector(".record-idle");
-    const recordResult = document.querySelector(".record-result");
+    const mobileModal = document.querySelector(".mobile-device-modal");
     const backgrounddiv = document.querySelector(".background");
     const mainSection = document.querySelector(".main-section");
+    const introSection = document.querySelector(".intro-section");
+    const demoSection = document.querySelector(".demo-section");
+    const recordSection = document.querySelector(".record-section");
+    const recordResult = document.querySelector(".record-result");
+
     switch (input) {
+      case "mobilemodal":
+        const allElement = document.querySelectorAll(
+          "body > div:not(.mobile-device-modal)"
+        );
+        allElement.forEach((el) => (el.style.display = "none"));
+        mobileModal.style.display = "flex";
+        break;
       case "intro":
         mainSection.style.transform = "translateX(0)";
         processingModal.style.display = "none";
+        introSection.style.opacity = 1;
+        demoSection.style.opacity = 0;
+        recordSection.style.opacity = 0;
+        recordResult.style.opacity = 0;
         break;
       case "idle":
         // recordIdle.style.opacity = "1";
         // recordIdle.style.zIndex = "2";
 
         mainSection.style.transform = "translateX(calc(-1/3 * 100% - 3px))";
+        introSection.style.opacity = 0;
+        demoSection.style.opacity = 1;
+        recordSection.style.opacity = 1;
+        recordResult.style.opacity = 0;
         // recordResult.style.opacity = "0";
         // recordResult.style.zIndex = "1";
 
@@ -63,6 +102,10 @@ $(document).ready(() => {
         // recordIdle.style.zIndex = "1";
 
         mainSection.style.transform = "translateX(calc(-2/3 * 100% - 3px))";
+        introSection.style.opacity = 0;
+        demoSection.style.opacity = 0;
+        recordSection.style.opacity = 0;
+        recordResult.style.opacity = 1;
         // recordResult.style.opacity = "1";
         // recordResult.style.zIndex = "2";
         processingModal.style.display = "none";
@@ -75,37 +118,30 @@ $(document).ready(() => {
         break;
     }
   };
-  // record state management
-  const record_changeState = (input) => {
-    const recordBtn = document.getElementById("record-btn-id");
-    switch (input) {
-      case "idle":
-        recordBtn.style.width = "90px";
-        recordBtn.style.height = "90px";
-        recordBtn.innerHTML = "Ready";
-        recordBtn.style.borderRadius = "50%";
-        break;
-      case "record":
-        recordBtn.style.width = "45px";
-        recordBtn.style.height = "45px";
-        recordBtn.innerHTML = "";
-        recordBtn.style.borderRadius = "0%";
-        break;
-    }
-  };
+  initHelpmodal();
+
   console.log("getting start ready!");
   initVideoSeleciton();
-  setupCamera();
 
   const classifyModel = new SignLanguageClassifyModel();
 
   const initmodel = async () => {
     await classifyModel.initModel();
-    page_changeState("intro");
+    window.recoil.isModelReady = true;
+    // page_changeState("intro");
     console.log("init model finish");
+    if (window.recoil.pageState === "processingmodel") page_changeState("idle");
   };
-  page_changeState("loadingmodel");
-  initmodel();
+  function notMobile() {
+    if (isMobile()) {
+      page_changeState("mobilemodal");
+
+      return false;
+    }
+    return true;
+  }
+  page_changeState("intro");
+  notMobile() && initmodel();
 
   /**
    * Flow:
@@ -150,9 +186,18 @@ $(document).ready(() => {
     rightHandEl.classList[addOrRemove(visiblePart.rightHand)]("active");
     faceEl.classList[addOrRemove(visiblePart.face)]("active");
   };
-  sliderFrame.oninput = function () {
+  sliderFrame.oninput = function (e) {
     selectFrameResult(this.value);
     updateVisiblePart(this.value);
+
+    const progress = +e.target.value / (+e.target.max - +e.target.min);
+
+    e.target.style.background = `linear-gradient(to right,
+      #1a73e8 0%,
+      #1a73e8 ${progress * 100}%,
+      #ffffff ${progress * 100}%,
+      #ffffff 100%
+      )`;
   };
 
   const IMAGE_STACK = [];
@@ -322,7 +367,7 @@ $(document).ready(() => {
       const time_now = +new Date();
       if (time_now - time_startCapture > 3000) {
         console.log("finish capture image");
-        record_changeState("idle");
+        // record_changeState("idle");
         page_changeState("processingmodel");
         startClassify();
         return;
@@ -334,7 +379,12 @@ $(document).ready(() => {
   };
 
   $("#intro-next-btn").on("click", () => {
-    page_changeState("idle");
+    if (window.recoil.isModelReady) {
+      page_changeState("idle");
+    } else {
+      page_changeState("processingmodel");
+    }
+    setupCamera();
   });
 
   $("#record-btn-id").on("click", () => {
@@ -350,7 +400,7 @@ $(document).ready(() => {
         console.log(count);
         if (count === 3) {
           countdownElem.innerHTML = "";
-          record_changeState("record");
+          // record_changeState("record");
           clearInterval(CountDownInterval);
           handleCapture();
         }

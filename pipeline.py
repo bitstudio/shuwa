@@ -1,3 +1,17 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import cv2
 import sys
 import numpy as np
@@ -75,7 +89,10 @@ class Pipeline:
         """Run sign classifier.
 
         Returns:
-            np.ndarray: 832 feats.
+            np.ndarray: 832D.
+            pose [0:255] : 256D
+            face[256:319] : 64D
+            hand[320:831] : 512D
         """
         feats = self.classifier([self.pose_history, self.face_history, self.left_hand_history, self.right_hand_history])
         self.reset_pipeline()
@@ -83,12 +100,12 @@ class Pipeline:
     
     
     def run_knn_classifier(self, k=3):    
-        feats = self.run_classifier()        
+        feats = self.run_classifier()
         distances_by_feats = np.square(self.database - feats)        
         distances_total = np.sum(distances_by_feats, axis=-1)    
         
 
-        # top 7 nearst samples.      
+        # top k nearst samples.      
         top_indices = np.argpartition(distances_total, k)[:k]
         top_lables = self.labels[top_indices]
         

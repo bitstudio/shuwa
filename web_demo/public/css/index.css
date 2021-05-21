@@ -1,3 +1,19 @@
+/**
+ * Copyright 2021 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 body {
   width: 100vw;
   height: 100vh;
@@ -11,6 +27,28 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.mobile-device-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 200;
+
+  width: 100vw;
+  height: 100vh;
+  background: white;
+
+  display: none;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 20px;
+  text-align: center;
+}
+.mobile-device-modal img {
+  width: 50%;
+  max-width: 100px;
+}
 .processing-modal {
   width: 100vw;
   height: 100vh;
@@ -22,9 +60,9 @@ body {
   justify-content: center;
   text-align: center;
   align-items: center;
-  display: flex;
+  display: none;
   z-index: 100;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.75);
 }
 .main-page {
   width: 100%;
@@ -40,19 +78,25 @@ body {
 .main-page-sidebar {
   position: relative;
   height: 100%;
-  background: #dddddd;
-  z-index: 2;
+  /* background: #dddddd; */
+  /* z-index: 2; */
 }
 .main-page-left {
   width: 10%;
 }
 .main-page-container {
-  height: 60%;
+  height: 100%;
+  max-height: 525px;
   width: 75%;
 
   border: 3px solid white;
   border-radius: 20px;
   pointer-events: none;
+}
+@media (max-height: 655px) {
+  .main-page-container {
+    height: calc(100% - 130px);
+  }
 }
 .main-page-container * {
   pointer-events: all;
@@ -77,6 +121,7 @@ body {
   margin: 15px;
   text-decoration: none;
   color: black;
+  cursor: pointer;
 }
 .social-btn-icon {
   width: 40px;
@@ -85,6 +130,15 @@ body {
   border-radius: 100%;
   background: white;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.social-btn-icon.github:hover {
+  background: #deeefd;
+}
+.social-btn-icon.signtown:hover {
+  background: #e8fce5;
+}
+.social-btn-icon.help:hover {
+  background: #f2f2f2;
 }
 .social-btn-text {
   font-size: 12px;
